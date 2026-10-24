@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>협의회 공지사항 | 군포시민사회단체협의회</title>
+  <style>
+    :root {
+      --ink: #172b28;
+      --muted: #5e6d68;
+      --green: #245c4a;
+      --green-dark: #173f34;
+      --lime: #d8e8a5;
+      --cream: #f7f6ef;
+      --paper: #fff;
+      --line: #e2e6dc;
+      --accent: #e5a64a;
+      --danger: #d9534f;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    
+    .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; }
+    .topline .wrap { display: flex; justify-content: space-between; padding: 8px 0; }
+    
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--line); }
+    .navrow { min-height: 78px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; }
+    .brandmark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50% 50% 48% 12%; background: var(--green); color: white; }
+    
+    nav { display: flex; gap: 20px; font-size: 14px; font-weight: 700; }
+    nav a:hover { color: var(--green); }
+
+    .page-header { background: var(--cream); padding: 40px 0; border-bottom: 1px solid var(--line); }
+    .page-header h1 { margin: 0 0 10px; font-size: 32px; color: var(--green-dark); }
+    .page-header p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .section { padding: 50px 0; }
+    .board-control { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .write-btn { padding: 8px 16px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    .write-btn:hover { background: var(--green-dark); }
+
+    .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--green); }
+    .board-table th, .board-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .board-table th { background: #fbfcf8; font-weight: 700; color: var(--green-dark); text-align: center; }
+    .board-table td.center { text-align: center; color: var(--muted); }
+    .title-link { font-weight: 600; color: var(--ink); cursor: pointer; }
+    .title-link:hover { color: var(--green); text-decoration: underline; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+    .badge.notice { background: var(--accent); color: white; }
+    .badge.cat { background: #eef3e8; color: var(--green); }
+
+    /* 관리자 상태바 및 숨김 클래스 */
+    .admin-bar { background: #f4f6f0; padding: 8px 16px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 13px; }
+    .admin-only { display: none !important; } /* 로그인 전에는 노출 차단 */
+    .btn-auth { padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
+
+    /* 모달 스타일 */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 22px; cursor: pointer; border: none; background: none; }
+    .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; }
+    .form-submit { width: 100%; padding: 10px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    
+    .modal-footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 6px; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
+    .btn-edit { color: var(--green); border-color: var(--green); }
+    .btn-delete { color: var(--danger); border-color: var(--danger); }
+
+    footer { background: #102e26; color: #dce8df; padding: 30px 0; font-size: 12px; margin-top: 50px; }
+  </style>
+
+  <!-- Firebase v9 Web SDK (모듈 방식) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC46ebJn5gQPBBz_NCjVqtGvWv9CKA7Dac",
+      authDomain: "gunpocivilnet-db4c0.firebaseapp.com",
+      projectId: "gunpocivilnet-db4c0",
+      storageBucket: "gunpocivilnet-db4c0.firebasestorage.app",
+      messagingSenderId: "182564753780",
+      appId: "1:182564753780:web:e6c6616ef99296fe4edc21"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let currentPostId = null;
+
+    // 관리자 로그인 상태 감지
+    onAuthStateChanged(auth, (user) => {
+      const adminElements = document.querySelectorAll('.admin-target');
+      const loginBtn = document.getElementById('btn-login-modal');
+      const logoutBtn = document.getElementById('btn-logout');
+      const statusText = document.getElementById('admin-status-text');
+
+      if (user) {
+        adminElements.forEach(el => el.classList.remove('admin-only'));
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        statusText.textContent = '🔒 관리자 로그인 상태입니다.';
+      } else {
+        adminElements.forEach(el => el.classList.add('admin-only'));
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        statusText.textContent = '시민 열람 모드입니다.';
+      }
+      renderBoard();
+    });
+
+    // 게시글 목록 불러오기 (Firestore 연동)
+    async function renderBoard() {
+      const tbody = document.getElementById('board-body');
+      tbody.innerHTML = '<tr><td colspan="5" class="center">게시글을 불러오는 중...</td></tr>';
+
+      try {
+        const q = query(collection(db, "notices"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        tbody.innerHTML = '';
+        document.getElementById('total-count').textContent = querySnapshot.size;
+
+        if (querySnapshot.empty) {
+          tbody.innerHTML = '<tr><td colspan="5" class="center">등록된 공지사항이 없습니다.</td></tr>';
+          return;
+        }
+
+        let total = querySnapshot.size;
+        querySnapshot.forEach((docSnap) => {
+          const post = docSnap.data();
+          const tr = document.createElement('tr');
+          const numDisplay = post.isNotice ? '<span class="badge notice">공지</span>' : total--;
+
+          tr.innerHTML = `
+            <td class="center">${numDisplay}</td>
+            <td class="center"><span class="badge cat">${post.cat || '공지'}</span></td>
+            <td><a class="title-link" onclick="openDetailModal('${docSnap.id}')">${post.title}</a></td>
+            <td class="center">${post.date || '-'}</td>
+            <td class="center">${post.views || 0}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        console.error(e);
+        tbody.innerHTML = '<tr><td colspan="5" class="center">게시글을 불러오지 못했습니다. (Firebase 설정 확인 필요)</td></tr>';
+      }
+    }
+
+    // 상세 보기 모달
+    window.openDetailModal = async (id) => {
+      currentPostId = id;
+      const docRef = doc(db, "notices", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const post = docSnap.data();
+        await updateDoc(docRef, { views: (post.views || 0) + 1 });
+
+        document.getElementById('detail-cat').textContent = post.cat || '공지';
+        document.getElementById('detail-title').textContent = post.title;
+        document.getElementById('detail-date').textContent = post.date || '-';
+        document.getElementById('detail-views').textContent = (post.views || 0) + 1;
+        document.getElementById('detail-content').textContent = post.content;
+        document.getElementById('detail-modal').style.display = 'flex';
+      }
+    };
+
+    // 관리자 로그인
+    window.handleLogin = async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const pass = document.getElementById('login-pass').value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        window.closeModal('login-modal');
+        alert('관리자로 로그인되었습니다.');
+      } catch (err) {
+        alert('로그인 실패: 아이디 또는 비밀번호를 확인해주세요.');
+      }
+    };
+
+    // 로그아웃
+    window.handleLogout = () => {
+      signOut(auth).then(() => alert('로그아웃되었습니다.'));
+    };
+
+    // 글 등록 및 수정 제출
+    window.handleWrite = async (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('edit-id').value;
+      const cat = document.getElementById('post-cat').value;
+      const title = document.getElementById('post-title').value.trim();
+      const content = document.getElementById('post-content').value.trim();
+
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+      if (editId) {
+        await updateDoc(doc(db, "notices", editId), { cat, title, content });
+        alert('수정되었습니다.');
+      } else {
+        await addDoc(collection(db, "notices"), {
+          cat,
+          title,
+          content,
+          date: dateStr,
+          views: 0,
+          isNotice: cat === '창립/총회',
+          createdAt: new Date()
+        });
+        alert('등록되었습니다.');
+      }
+
+      window.closeModal('write-modal');
+      renderBoard();
+    };
+
+    // 글 삭제
+    window.deleteCurrentPost = async () => {
+      if (!currentPostId) return;
+      if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+        await deleteDoc(doc(db, "notices", currentPostId));
+        window.closeModal('detail-modal');
+        renderBoard();
+        alert('삭제되었습니다.');
+      }
+    };
+
+    window.openWriteModal = () => {
+      document.getElementById('edit-id').value = '';
+      document.getElementById('write-modal-title').textContent = '공지사항 글쓰기';
+      document.getElementById('form-submit-btn').textContent = '등록하기';
+      document.getElementById('write-form').reset();
+      document.getElementById('write-modal').style.display = 'flex';
+    };
+
+    window.openEditModal = async () => {
+      const docSnap = await getDoc(doc(db, "notices", currentPostId));
+      if (!docSnap.exists()) return;
+      const post = docSnap.data();
+
+      window.closeModal('detail-modal');
+      document.getElementById('edit-id').value = currentPostId;
+      document.getElementById('write-modal-title').textContent = '공지사항 글 수정';
+      document.getElementById('form-submit-btn').textContent = '수정 완료';
+
+      document.getElementById('post-cat').value = post.cat || '일반공지';
+      document.getElementById('post-title').value = post.title;
+      document.getElementById('post-content').value = post.content;
+
+      document.getElementById('write-modal').style.display = 'flex';
+    };
+
+    window.closeModal = (id) => {
+      document.getElementById(id).style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    };
+  </script>
+</head>
+<body>
+
+  <div class="topline">
+    <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
+  </div>
+  
+  <header>
+    <div class="wrap navrow">
+      <a class="brand" href="index.html">
+        <span class="brandmark">잇</span>
+        <span>군포시민사회단체협의회</span>
+      </a>
+      <nav>
+        <a href="index.html">홈으로</a>
+        <a href="notice.html" style="color:var(--green);">공지사항</a>
+        <a href="statement.html">성명서</a>
+        <a href="gallery.html">갤러리</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <div class="wrap">
+      <h1>협의회 공지사항</h1>
+      <p>군포시민사회단체협의회의 주요 공지사항과 소식을 전해드립니다.</p>
+    </div>
+  </div>
+
+  <main class="section">
+    <div class="wrap">
+
+      <!-- 관리자 모드 안내 바 -->
+      <div class="admin-bar">
+        <span id="admin-status-text">상태 확인 중...</span>
+        <div>
+          <button type="button" class="btn-auth" id="btn-login-modal" onclick="document.getElementById('login-modal').style.display='flex'">관리자 로그인</button>
+          <button type="button" class="btn-auth" id="btn-logout" style="display:none;" onclick="handleLogout()">로그아웃</button>
+        </div>
+      </div>
+
+      <div class="board-control">
+        <div>전체 <b id="total-count">0</b>건의 게시글</div>
+        <!-- 로그인 시에만 노출되는 글쓰기 버튼 -->
+        <button type="button" class="write-btn admin-target admin-only" onclick="openWriteModal()">✏️ 글쓰기</button>
+      </div>
+
+      <table class="board-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">번호</th>
+            <th style="width: 120px;">구분</th>
+            <th>제목</th>
+            <th style="width: 120px;">작성일</th>
+            <th style="width: 90px;">조회수</th>
+          </tr>
+        </thead>
+        <tbody id="board-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- 상세 모달 -->
+  <div id="detail-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
+      <div class="modal-header">
+        <span class="badge cat" id="detail-cat">카테고리</span>
+        <h2 id="detail-title" style="margin:5px 0;">제목</h2>
+        <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span> · 조회수: <span id="detail-views"></span></div>
+      </div>
+      <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px;">내용</div>
+      <!-- 로그인 시에만 노출되는 수정/삭제 버튼 -->
+      <div class="modal-footer admin-target admin-only">
+        <button type="button" class="btn-sm btn-edit" onclick="openEditModal()">수정</button>
+        <button type="button" class="btn-sm btn-delete" onclick="deleteCurrentPost()">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 글쓰기/수정 모달 -->
+  <div id="write-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('write-modal')">×</button>
+      <div class="modal-header"><h2 id="write-modal-title" style="margin:0;">글쓰기</h2></div>
+      <form id="write-form" onsubmit="handleWrite(event)">
+        <input type="hidden" id="edit-id">
+        <div class="form-group">
+          <label>구분</label>
+          <select id="post-cat">
+            <option value="창립/총회">창립/총회</option>
+            <option value="행사안내">행사안내</option>
+            <option value="일반공지">일반공지</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>제목</label>
+          <input type="text" id="post-title" required>
+        </div>
+        <div class="form-group">
+          <label>내용</label>
+          <textarea id="post-content" rows="6" required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="form-submit-btn">등록하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 관리자 로그인 모달 -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <button class="modal-close" onclick="closeModal('login-modal')">×</button>
+      <div class="modal-header"><h2 style="margin:0;">관리자 로그인</h2></div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>이메일 계정</label>
+          <input type="email" id="login-email" required placeholder="admin@example.com">
+        </div>
+        <div class="form-group">
+          <label>비밀번호</label>
+          <input type="password" id="login-pass" required>
+        </div>
+        <button type="submit" class="form-submit">로그인</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">© 군포시민사회단체협의회. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>

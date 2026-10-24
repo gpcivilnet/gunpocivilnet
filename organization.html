@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="군포시민사회단체협의회 - 조직도 및 운영 체계">
+  <title>조직도 및 운영 체계 | 군포시민사회단체협의회</title>
+  <style>
+    :root {
+      --ink: #172b28;
+      --muted: #5e6d68;
+      --green: #245c4a;
+      --green-dark: #173f34;
+      --lime: #d8e8a5;
+      --cream: #f7f6ef;
+      --paper: #fff;
+      --line: #e2e6dc;
+      --accent: #e5a64a;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.65; background: var(--paper); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    
+    /* Topbar & Navigation Header */
+    .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; letter-spacing: .04em; }
+    .topline .wrap { display:flex; justify-content:space-between; gap:16px; padding:8px 0; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); backdrop-filter: blur(12px); }
+    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width: 240px; }
+    .brandmark { display:grid; place-items:center; width:42px; height:42px; border-radius:50% 50% 48% 12%; background:var(--green); color:white; font-size:22px; transform:rotate(-5deg); }
+    .brandmark span { transform:rotate(5deg); }
+    .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
+    .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
+    
+    nav { display:flex; align-items:center; gap:23px; }
+    .nav-group { position: relative; display: inline-block; }
+    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
+    .navitem::after { content:""; position:absolute; bottom:18px; left:0; width:0; height:2px; background:var(--green); transition:width .2s; }
+    .nav-group:hover .navitem::after, .navitem.active::after { width:100%; }
+    
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      min-width: 180px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 8px 0;
+      z-index: 100;
+    }
+    .nav-group:hover .dropdown { display: block; }
+    .dropdown a {
+      display: block;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      transition: background 0.2s, color 0.2s;
+    }
+    .dropdown a:hover, .dropdown a.active {
+      background: var(--cream);
+      color: var(--green);
+    }
+
+    .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
+    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; }
+
+    /* Subpage Header Banner */
+    .page-header { background: var(--cream); padding: 50px 0 0; border-bottom: 1px solid var(--line); }
+    .page-title-area { text-align: left; margin-bottom: 30px; }
+    .page-title-area .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+    .page-title-area h1 { margin: 0; font-size: 36px; color: var(--green-dark); letter-spacing: -.04em; }
+    .page-title-area p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+
+    .sub-tabs { display: flex; gap: 8px; border-bottom: 2px solid var(--line); }
+    .sub-tabs a {
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+    .sub-tabs a.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+      background: var(--paper);
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    /* Section & Content Layout */
+    .section { padding: 70px 0; }
+    .org-container { max-width: 960px; margin: 0 auto; }
+    
+    .section-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 50px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 16px;
+    }
+    .section-title-wrap h2 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -.03em;
+    }
+    .section-title-wrap p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 500px;
+      text-align: right;
+    }
+
+    /* Org Chart Diagram */
+    .org-chart-wrapper {
+      background: #fafaf7;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 50px 20px;
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .org-node {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: transform 0.2s;
+    }
+    .org-node:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Primary Node Styles */
+    .node-primary {
+      background: var(--green-dark);
+      color: #ffffff;
+      font-size: 17px;
+      width: 220px;
+      height: 52px;
+    }
+
+    /* Secondary Node Styles */
+    .node-secondary {
+      background: #eff3e6;
+      color: var(--green-dark);
+      border: 1px solid #d4dfc4;
+      font-size: 15px;
+      width: 200px;
+      height: 48px;
+    }
+
+    /* Outline Node Styles */
+    .node-outline {
+      background: #ffffff;
+      color: var(--green-dark);
+      border: 1px solid var(--line);
+      font-size: 15px;
+      width: 200px;
+      height: 48px;
+    }
+
+    /* Connecting Lines */
+    .v-line {
+      width: 2px;
+      height: 28px;
+      background-color: #a3b899;
+    }
+
+    .level-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    .dual-branch-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .horizontal-connector {
+      position: relative;
+      width: 220px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .horizontal-connector::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #a3b899;
+    }
+    .horizontal-connector::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      background-color: #a3b899;
+      transform: translateX(-50%);
+    }
+
+    /* Details Grid Cards */
+    .org-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .detail-card {
+      background: #fcfcf8;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px 24px;
+    }
+    .detail-card h3 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green-dark);
+    }
+    .detail-card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Footer Styles */
+    footer { background:#102e26; color:#dce8df; padding:42px 0 26px; margin-top: 60px; }
+    .footer-top { display:flex; justify-content:space-between; gap:30px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.17); }
+    .footer-brand { font-size:18px; font-weight:800; }
+    .footer-copy { max-width:520px; color:#aebfb4; font-size:12px; }
+    .footer-bottom { display:flex; justify-content:space-between; gap:20px; padding-top:20px; color:#9db0a4; font-size:11px; }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 768px) {
+      .wrap { width:min(100% - 32px, var(--max)); }
+      .navrow { flex-wrap:wrap; padding:13px 0; }
+      .menu-toggle { display:block; }
+      nav { display:none; flex-basis:100%; flex-direction:column; align-items:stretch; gap:0; padding:4px 0 8px; }
+      nav.open { display:flex; }
+      .nav-group { width: 100%; }
+      .navitem { padding:11px 2px; font-size:14px; border-top:1px solid var(--line); width:100%; }
+      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding-left: 15px; }
+      .nav-group:hover .dropdown { display: block; }
+      
+      .section-title-wrap { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .section-title-wrap p { text-align: left; }
+
+      .level-row { flex-direction: column; gap: 12px; align-items: center; }
+      .horizontal-connector { display: none; }
+      
+      .org-details-grid { grid-template-columns: 1fr; }
+      .footer-top, .footer-bottom { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Topbar Announcement -->
+  <div class="topline">
+    <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
+  </div>
+  
+  <!-- Header & Navigation -->
+  <header>
+    <div class="wrap navrow">
+      <a class="brand" href="index.html" aria-label="군포시민사회단체협의회 홈">
+        <span class="brandmark"><span>잇</span></span>
+        <span><strong>군포시민사회단체협의회</strong><small>GUNPO CIVIL SOCIETY COUNCIL</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">메뉴 ☰</button>
+      
+      <nav id="main-nav" aria-label="주 메뉴">
+        <div class="nav-group">
+          <a class="navitem active" href="index.html#about">법인 소개</a>
+          <div class="dropdown">
+            <a href="index.html#about">소개 및 비전</a>
+            <a href="organization.html" class="active">조직도 및 운영 체계</a>
+            <a href="history.html">걸어온길 (연혁)</a>
+          </div>
+        </div>
+        <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
+        <a class="navitem" href="index.html#news">공지 및 소식</a>
+        <a class="navitem" href="index.html#disclosure">정보 공개</a>
+        <a class="navitem" href="index.html#participate">참여 및 후원</a>
+      </nav>
+      <a class="nav-cta" href="index.html#participate">함께하기 ↗</a>
+    </div>
+  </header>
+
+  <!-- Subpage Banner -->
+  <section class="page-header">
+    <div class="wrap">
+      <div class="page-title-area">
+        <div class="breadcrumb">홈 &gt; 법인 소개 &gt; 조직도 및 운영 체계</div>
+        <h1>조직도 및 운영 체계</h1>
+        <p>총회와 이사회를 중심으로 의사결정 체계를 갖추고, 이사장과 사무국을 통해 협의회의 사업을 추진합니다.</p>
+      </div>
+      <div class="sub-tabs">
+        <a href="index.html#about">소개 및 비전</a>
+        <a href="organization.html" class="active">조직도 및 운영 체계</a>
+        <a href="history.html">걸어온길 (연혁)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Section -->
+  <main class="section">
+    <div class="wrap org-container">
+
+      <div class="section-title-wrap">
+        <h2>조직도 및 운영 체계</h2>
+        <p>총회와 이사회를 중심으로 의사결정 체계를 갖추고, 이사장과 사무국을 통해 협의회의 사업을 추진합니다.</p>
+      </div>
+
+      <!-- Organizational Chart Diagram -->
+      <div class="org-chart-wrapper">
+        <!-- 1. 총회 -->
+        <div class="org-node node-primary">총회</div>
+
+        <div class="v-line"></div>
+
+        <!-- 2. 이사회 & 고문·감사 -->
+        <div class="dual-branch-container">
+          <div class="level-row">
+            <div class="org-node node-secondary">이사회</div>
+            <div class="org-node node-secondary">고문 · 감사</div>
+          </div>
+          <div class="horizontal-connector"></div>
+        </div>
+
+        <!-- 3. 이사장 -->
+        <div class="org-node node-primary">이사장</div>
+
+        <div class="v-line"></div>
+
+        <!-- 4. 상임이사 -->
+        <div class="org-node node-outline">상임이사</div>
+
+        <div class="v-line"></div>
+
+        <!-- 5. 사무국 -->
+        <div class="org-node node-outline">사무국</div>
+      </div>
+
+      <!-- Organizational Role Details Grid -->
+      <div class="org-details-grid">
+        <div class="detail-card">
+          <h3>상임이사</h3>
+          <p>이사회의 의결을 거쳐 이사장이 임명하며, 이사회의 결의사항과 정관에서 정한 제반 업무를 처리합니다.</p>
+        </div>
+        <div class="detail-card">
+          <h3>사무국장</h3>
+          <p>이사회의 의결을 거쳐 이사장이 임명하며, 이사회의 결의사항과 정관에서 정한 제반 업무를 처리합니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">군포시민사회단체협의회</div>
+          <div class="notice">민주주의의 자산을 다음 세대의 시민자산으로</div>
+        </div>
+        <div class="footer-copy">
+          주소: 경기도 군포시 번영로557번길 44(금정동, 301호)<br>
+          이메일: [대표 이메일 입력]　전화: [전화번호 입력]<br>
+          대중교통 안내<br>
+          ◆ 지하철: 4호선 산본역 3번 출구에서 도보 10분 거리<br>
+          ◆ 버스: 군포시청 버스정류장<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;(직행) 3030 · 3101 · 3500 · 6501<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;(일반) 15-2 · 30 · 31 · 32A · 55 · 87<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;(마을) 1 · 2 · 3 · 6 · 7
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 군포시민사회단체협의회. All rights reserved.</span>
+        <span>법인 소개　 주요 사업　 공지 및 소식　 정보 공개　 참여 및 후원</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation menu toggle
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#main-nav');
+    toggle.addEventListener('click', () => {
+      const opened = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(opened));
+    });
+  </script>
+</body>
+</html>

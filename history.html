@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="군포시민사회단체협의회 - 걸어온길 (연혁)">
+  <title>걸어온길 | 군포시민사회단체협의회</title>
+  <style>
+    :root {
+      --ink: #172b28;
+      --muted: #5e6d68;
+      --green: #245c4a;
+      --green-dark: #173f34;
+      --lime: #d8e8a5;
+      --cream: #f7f6ef;
+      --paper: #fff;
+      --line: #e2e6dc;
+      --accent: #e5a64a;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.65; background: var(--paper); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    
+    .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; letter-spacing: .04em; }
+    .topline .wrap { display:flex; justify-content:space-between; gap:16px; padding:8px 0; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); backdrop-filter: blur(12px); }
+    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width: 240px; }
+    .brandmark { display:grid; place-items:center; width:42px; height:42px; border-radius:50% 50% 48% 12%; background:var(--green); color:white; font-size:22px; transform:rotate(-5deg); }
+    .brandmark span { transform:rotate(5deg); }
+    .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
+    .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
+    
+    nav { display:flex; align-items:center; gap:23px; }
+    .nav-group { position: relative; display: inline-block; }
+    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
+    .navitem::after { content:""; position:absolute; bottom:18px; left:0; width:0; height:2px; background:var(--green); transition:width .2s; }
+    .nav-group:hover .navitem::after, .navitem.active::after { width:100%; }
+    
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      min-width: 170px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 8px 0;
+      z-index: 100;
+    }
+    .nav-group:hover .dropdown { display: block; }
+    .dropdown a {
+      display: block;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      transition: background 0.2s, color 0.2s;
+    }
+    .dropdown a:hover, .dropdown a.active {
+      background: var(--cream);
+      color: var(--green);
+    }
+
+    .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
+    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; }
+
+    .page-header { background: var(--cream); padding: 50px 0; border-bottom: 1px solid var(--line); }
+    .page-title-area { text-align: left; }
+    .page-title-area .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+    .page-title-area h1 { margin: 0; font-size: 36px; color: var(--green-dark); letter-spacing: -.04em; }
+    .page-title-area p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+
+    .sub-tabs { display: flex; gap: 8px; margin-top: 25px; border-bottom: 2px solid var(--line); }
+    .sub-tabs a {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+    .sub-tabs a.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    .section { padding: 60px 0; }
+    
+    .history-section { max-width: 900px; margin: 0 auto; }
+    .year-block { margin-bottom: 60px; position: relative; }
+    .year-title {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--green);
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .year-title::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .timeline { position: relative; padding-left: 20px; border-left: 2px dashed #cbd9c3; }
+    .month-group { margin-bottom: 30px; position: relative; }
+    .month-group::before {
+      content: "";
+      position: absolute;
+      left: -26px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .month-badge {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin-bottom: 10px;
+    }
+    .history-list { list-style: none; padding: 0; margin: 0; }
+    .history-list li {
+      position: relative;
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .history-list li a { color: var(--green); font-weight: 600; text-decoration: underline; }
+    .history-list li a:hover { color: var(--green-dark); }
+
+    footer { background:#102e26; color:#dce8df; padding:42px 0 26px; margin-top: 60px; }
+    .footer-top { display:flex; justify-content:space-between; gap:30px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.17); }
+    .footer-brand { font-size:18px; font-weight:800; }
+    .footer-copy { max-width:520px; color:#aebfb4; font-size:12px; }
+    .footer-bottom { display:flex; justify-content:space-between; gap:20px; padding-top:20px; color:#9db0a4; font-size:11px; }
+
+    @media (max-width: 740px) {
+      .wrap { width:min(100% - 32px, var(--max)); }
+      .navrow { flex-wrap:wrap; padding:13px 0; }
+      .menu-toggle { display:block; }
+      nav { display:none; flex-basis:100%; flex-direction:column; align-items:stretch; gap:0; padding:4px 0 8px; }
+      nav.open { display:flex; }
+      .nav-group { width: 100%; }
+      .navitem { padding:11px 2px; font-size:14px; border-top:1px solid var(--line); width:100%; }
+      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding-left: 15px; }
+      .nav-group:hover .dropdown { display: block; }
+      .footer-top, .footer-bottom { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topline">
+    <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
+  </div>
+  
+  <header>
+    <div class="wrap navrow">
+      <a class="brand" href="index.html" aria-label="군포시민사회단체협의회 홈">
+        <span class="brandmark"><span>잇</span></span>
+        <span><strong>군포시민사회단체협의회</strong><small>GUNPO CIVIL SOCIETY COUNCIL</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">메뉴 ☰</button>
+      
+      <nav id="main-nav" aria-label="주 메뉴">
+        <div class="nav-group">
+          <a class="navitem active" href="index.html#about">법인 소개</a>
+          <div class="dropdown">
+            <a href="index.html#about">소개 및 비전</a>
+            <a href="index.html#organization">조직도 및 운영 체계</a>
+            <a href="history.html" class="active">걸어온길 (연혁)</a>
+          </div>
+        </div>
+        <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
+        <a class="navitem" href="index.html#news">공지 및 소식</a>
+        <a class="navitem" href="index.html#disclosure">정보 공개</a>
+        <a class="navitem" href="index.html#participate">참여 및 후원</a>
+      </nav>
+      <a class="nav-cta" href="index.html#participate">함께하기 ↗</a>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="wrap">
+      <div class="page-title-area">
+        <div class="breadcrumb">홈 &gt; 법인 소개 &gt; 걸어온길</div>
+        <h1>걸어온길</h1>
+        <p>군포시민사회단체협의회가 걸어온 정의와 연대의 발자취입니다.</p>
+      </div>
+      <div class="sub-tabs">
+        <a href="index.html#about">법인 소개</a>
+        <a href="index.html#organization">조직도</a>
+        <a href="history.html" class="active">걸어온길 (연혁)</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="section">
+    <div class="wrap history-section">
+
+      <!-- 2024년 -->
+      <div class="year-block">
+        <div class="year-title">2024년</div>
+        <div class="timeline">
+
+          <div class="month-group">
+            <div class="month-badge">12월</div>
+            <ul class="history-list">
+              <li>군포시민사회단체협의회 기금모음 후원밥집 (12.05)</li>
+              <li>고강태완군 추모현수막 연대</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">11월</div>
+            <ul class="history-list">
+              <li>시흥수원 민자고속화도로 반대 기자회견 (11.13)</li>
+              <li>의왕군포안산 택지 개발 반대 기자회견 (11.20)</li>
+              <li>윤석열 퇴진! 김건희 특검! 캠페인 (11.20)</li>
+              <li>[산본이마트 의무휴일 변경 반대 : 장보기퍼포먼스] (11.21)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">10월</div>
+            <ul class="history-list">
+              <li>공익활동 페스타 (10.18)</li>
+              <li>‘시의정 감시 군포 시민행동발족’ 기자회견 - “하은호 군포시장에게 공개질의 합니다” (10.21)</li>
+              <li>산본이마트 의무휴일 변경 서명전 (10.31)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">9월</div>
+            <ul class="history-list">
+              <li>군포시민협 <a href="https://www.youtube.com/channel/UCDsgbE-hwdsBlropMKbCDKA" target="_blank" rel="noopener">유튜브 채널</a> 개설</li>
+              <li>시흥~수원간 민자고속화도로 추진 반대 토론회</li>
+              <li>윤석열정권 퇴진! 경기중부 촛불문화제(건설노동자 생존권 사수 투쟁문화제)</li>
+              <li>리영희 14주기 추모행사 영화상영 협력</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">8월</div>
+            <ul class="history-list">
+              <li>『군포시 시민참여형 탄소중립 기본계획 수립 및 이행기반 구축을 위한 시민토론회』 (8.21)</li>
+              <li>아리셀희망버스 인증샷 캠페인 동참</li>
+              <li>군포시청 1회용컵 사용 모니터링 (8/26~8/28)</li>
+              <li>군포시 민선8기 전반기 시정평가 토론회 (8.28)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">7월</div>
+            <ul class="history-list">
+              <li>옛 유한양행 부지 맹꽁이 집단 서식에 따른 보호 대책 요청 (7.05)</li>
+              <li>경기중부노동시민사회 공동대책위원회 출범 기자회견 (7.24)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">5월</div>
+            <ul class="history-list">
+              <li>후원금 전달식 - 이대수 대표님과 군포환경자치시민회에서 본회에 기금 후원 (5.2)</li>
+              <li>제44주년 5.18민중항쟁 기념행사 - 군포시민사회단체협의회 주먹밥 부스 운영</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">4월</div>
+            <ul class="history-list">
+              <li>4.16 세월호참사 10주기 추념 행사 [기억은 힘이 세지]</li>
+              <li>[군포시청소년재단 사태 진상규명 촉구 기자회견]</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">2월</div>
+            <ul class="history-list">
+              <li>군포시청소년재단 연이은 자살사건에 대한 진상규명 요구</li>
+              <li>제1회 군포시민사회단체협의회 정기총회 (2.26)</li>
+              <li>상가 관리비 2천만원 수수의혹·골프비 대납 규탄 기자회견 - ‘하은호 군포시장은 공개 사과하고, 즉각 사퇴하라!’ (2.28)</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2023년 -->
+      <div class="year-block">
+        <div class="year-title">2023년</div>
+        <div class="timeline">
+
+          <div class="month-group">
+            <div class="month-badge">12월</div>
+            <ul class="history-list">
+              <li>군포시공활직영전환 행정심판청구 보충서면 제출 (12.11)</li>
+              <li>행정심판청구 경과보고, 시민협 송년회 및 총회 논의 (12.14)</li>
+              <li>시민협 송년회 겸 군포공활 활동가 송별회 (12.26)</li>
+              <li>경기행심위 군포공활직영 행정심판청구 심리 (12.26)</li>
+              <li>경기행심위, 군포공활직영 행정심판 ‘각하’로 재결 (12.27)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">11월</div>
+            <ul class="history-list">
+              <li>행정심판청구 관련 프레시안 기자인터뷰 및 이동한시의원 면담 (11.08)</li>
+              <li>행정심판청구 관련 김귀근시의원 면담 (11.09)</li>
+              <li>군포시민사회활성화 워크샵 (11.24)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">10월</div>
+            <ul class="history-list">
+              <li>경기공익활동가대회 참여 (10.11)</li>
+              <li>군포시 위수탁현황 및 개선방향을 위한 토론회 (10.16)</li>
+              <li>하은호시장 공활직영전환관련 면담회 (10.18)</li>
+              <li>민생파탄 전쟁위기 윤석열정권 규탄 촛불캠페인 (10.18)</li>
+              <li>김귀근시의원간담회: 군포시공익활동지원센터 직영전환과정 위법대응논의 (10.19)</li>
+              <li>행정심판청구 및 기자회견 긴급회의 (10.24)</li>
+              <li>군포시공익활동지원센터 직영전환과정 위법 행정심판청구 및 기자회견</li>
+              <li>군포시공익활동지원센터 직영전환관련 시의원 간담회 (10.31)</li>
+              <li>경기도교육청 학생인권조례폐지 공대위 참여</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">9월</div>
+            <ul class="history-list">
+              <li>군포시의회 신금자의원간담회(군포시 위수탁행정 대응논의)</li>
+              <li>군포시의회 민주당의원간담회(군포시 위수탁 개선 토론회 제안) (9.26)</li>
+              <li>23년 9월 일본핵오염수해양투기반대 1인 릴레이시위</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">8월</div>
+            <ul class="history-list">
+              <li>군포시공익활동지원센터 재위탁관련 긴급회의 (8.22)</li>
+              <li>군포시민협 활동가 묵음재 친목의 자리 (8.22)</li>
+              <li>군포시공익활동지원센터 재위탁관련 군포시의회 신금자의원 간담회 (8.28)</li>
+              <li>일본핵오염수해양투기반대 연대 경기중부비상시국회의 참여 (8.29)</li>
+              <li>제3차 시민협활성화토론회 (8.30)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">7월</div>
+            <ul class="history-list">
+              <li>제3차 시민사회활성화토론회 관련논의</li>
+              <li>‘일본방사능 오염수해양투기반대 군포시민1000인 선언’ 캠페인 및 기자회견</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">6월</div>
+            <ul class="history-list">
+              <li>610 경기도 기념행사</li>
+              <li>군포시 청소년권리증진에 관한 조례 관련 국민의힘 박상현의원 발언 긴급 피켓팅</li>
+              <li>군포시민단체협의회 2차 토론회 (6.21)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">5월</div>
+            <ul class="history-list">
+              <li>518 기념행사</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">4월</div>
+            <ul class="history-list">
+              <li>세월호 추념행사 (4.13)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">2월</div>
+            <ul class="history-list">
+              <li>군포시 시청사 사용 관련 행정예고 철회요구 기자회견 (2.16)</li>
+              <li>군포 벌터 마벨지구 토양오염물질 조사요구 기자회견 (2.22)</li>
+              <li>군포지역시민사회활성화 T/F 구성 논의</li>
+              <li>한반도평화행동 출범대회 참여 (3.03)</li>
+            </ul>
+          </div>
+
+          <div class="month-group">
+            <div class="month-badge">1월</div>
+            <ul class="history-list">
+              <li>군포시민사회단체협의회 신년회 (1.11)</li>
+              <li>군포시 장애인복지관 이용자회와 연대, 경기도 주민감사 청구 서명운동 (1.12)</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">군포시민사회단체협의회</div>
+          <div class="notice">민주주의의 자산을 다음 세대의 시민자산으로</div>
+        </div>
+        <div class="footer-copy">
+          주소: 경기도 군포시 번영로557번길 44(금정동, 301호)<br>
+          이메일: [대표 이메일 입력]　전화: [전화번호 입력]<br>
+          대중교통 안내<br>
+          ◆ 지하철: 4호선 산본역 3번 출구에서 도보 10분 거리<br>
+          ◆ 버스: 군포시청 버스정류장<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;(직행) 3030 · 3101 · 3500 · 6501<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;(일반) 15-2 · 30 · 31 · 32A · 55 · 87<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;(마을) 1 · 2 · 3 · 6 · 7
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 군포시민사회단체협의회. All rights reserved.</span>
+        <span>법인 소개　 주요 사업　 공지 및 소식　 정보 공개　 참여 및 후원</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#main-nav');
+    toggle.addEventListener('click', () => {
+      const opened = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(opened));
+    });
+  </script>
+</body>
+</html>
