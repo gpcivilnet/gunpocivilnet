@@ -1,0 +1,28 @@
+/* 드롭다운 스타일 */
+.nav-group { position: relative; display: inline-block; }
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  min-width: 160px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 100;
+}
+.nav-group:hover .dropdown { display: block; }
+.dropdown a {
+  display: block;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background 0.2s, color 0.2s;
+}
+.dropdown a:hover {
+  background: var(--cream);
+  color: var(--green);
+}

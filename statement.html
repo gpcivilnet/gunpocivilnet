@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="군포시민사회단체협의회 - 성명서 및 정책 제안">
+  <meta name="description" content="군포시민사회단체협의회 - 성명서 · 정책 제안">
   <title>성명서 · 정책 제안 | 군포시민사회단체협의회</title>
   <style>
     :root {
@@ -36,6 +36,7 @@
     .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
     .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
     
+    /* PC 네비게이션 및 드롭다운 */
     nav { display:flex; align-items:center; gap:23px; }
     .nav-group { position: relative; }
     .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
@@ -44,7 +45,7 @@
     
     .dropdown {
       display: none; position: absolute; top: 100%; left: 0; background: #ffffff;
-      min-width: 180px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--line);
+      min-width: 190px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--line);
       border-radius: 4px; padding: 8px 0; z-index: 100;
     }
     .nav-group:hover .dropdown { display: block; }
@@ -52,48 +53,39 @@
     .dropdown a:hover, .dropdown a.active { background: var(--cream); color: var(--green); }
 
     .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
+    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; cursor: pointer; }
 
     .page-header { background: var(--cream); padding: 50px 0 0; border-bottom: 1px solid var(--line); }
     .page-title-area h1 { margin: 0; font-size: 36px; color: var(--green-dark); letter-spacing: -.04em; }
     .page-title-area p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
 
-    .sub-tabs { display: flex; gap: 8px; margin-top: 25px; border-bottom: 2px solid var(--line); }
-    .sub-tabs a { padding: 12px 22px; font-size: 14px; font-weight: 700; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; }
+    .sub-tabs { display: flex; gap: 8px; margin-top: 25px; border-bottom: 2px solid var(--line); overflow-x: auto; }
+    .sub-tabs a { padding: 12px 22px; font-size: 14px; font-weight: 700; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
     .sub-tabs a.active { color: var(--green); border-bottom-color: var(--green); background: #fff; border-radius: 4px 4px 0 0; }
 
     .section { padding: 50px 0 80px; }
-    .board-control { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 12px; }
-    .board-count { font-size: 14px; color: var(--muted); }
-    .board-count b { color: var(--green); }
-    
+    .board-control { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .write-btn { padding: 8px 16px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    .write-btn:hover { background: var(--green-dark); }
 
-    /* 관리자 상태바 */
+    .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--green); background: white; border-radius: 6px; overflow: hidden; }
+    .board-table th, .board-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .board-table th { background: #fbfcf8; font-weight: 700; color: var(--green-dark); text-align: center; }
+    .board-table td.center { text-align: center; color: var(--muted); }
+    .title-link { font-weight: 600; color: var(--ink); cursor: pointer; }
+    .title-link:hover { color: var(--green); text-decoration: underline; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+    .badge.cat { background: #eef3e8; color: var(--green); }
+
     .admin-bar { background: #f4f6f0; padding: 8px 16px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 13px; }
     .admin-only { display: none !important; }
     .btn-auth { padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
 
-    /* 성명서 카드 리스트 */
-    .statement-list { display: grid; gap: 16px; }
-    .statement-card { background: white; border: 1px solid var(--line); border-radius: 6px; padding: 24px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; transition: transform 0.2s, box-shadow 0.2s; }
-    .statement-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(23,43,40,0.05); border-color: #cbd9c3; }
-    
-    .statement-info .meta { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
-    .badge { display: inline-block; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
-    .badge.state { background: var(--green); color: white; }
-    .badge.policy { background: var(--accent); color: white; }
-    .date { font-size: 13px; color: var(--muted); }
-
-    .statement-info h3 { margin: 0 0 8px; font-size: 18px; color: var(--ink); cursor: pointer; }
-    .statement-info h3:hover { color: var(--green); text-decoration: underline; }
-    .statement-info p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
-
-    /* 모달 팝업 */
-    .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
-    .modal-content { background: white; padding: 35px; border-radius: 8px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
-    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; border: none; background: none; color: var(--muted); }
-    .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 20px; }
-    .modal-header h2 { margin: 10px 0 5px; font-size: 20px; color: var(--green-dark); }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 22px; cursor: pointer; border: none; background: none; }
+    .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
     
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
@@ -105,7 +97,36 @@
     .btn-edit { color: var(--green); border-color: var(--green); }
     .btn-delete { color: var(--danger); border-color: var(--danger); }
 
-    footer { background:#102e26; color:#dce8df; padding:42px 0 26px; margin-top:50px; }
+    footer { background: #102e26; color: #dce8df; padding: 42px 0 26px; font-size: 12px; margin-top: 50px; }
+
+    @media (max-width: 950px) {
+      .navrow { min-height:70px; }
+      nav { gap:13px; }
+      .navitem { font-size:12px; }
+      .nav-cta { display:none; }
+    }
+
+    @media (max-width: 740px) {
+      .wrap { width:min(100% - 32px, var(--max)); }
+      .topline .wrap { font-size:10px; }
+      .navrow { flex-wrap:wrap; padding:13px 0; }
+      .brand { min-width:0; }
+      .brand strong { font-size:15px; }
+      .menu-toggle { display:block; }
+      
+      nav { display:none; flex-basis:100%; flex-direction:column; align-items:stretch; gap:0; padding:4px 0 8px; }
+      nav.open { display:flex; }
+      
+      .nav-group { width: 100%; }
+      .navitem { padding:13px 4px; font-size:14px; border-top:1px solid var(--line); width:100%; display: flex; justify-content: space-between; align-items: center; }
+      .navitem::after { display:none; }
+      .navitem .arrow { font-size: 10px; transition: transform 0.2s; }
+      .nav-group.open .navitem .arrow { transform: rotate(180deg); }
+      
+      .nav-group:hover .dropdown { display: none; }
+      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
+      .nav-group.open .dropdown { display: block; }
+    }
   </style>
 
   <!-- Firebase v9 Web SDK -->
@@ -150,53 +171,53 @@
     });
 
     async function renderBoard() {
-      const listContainer = document.getElementById('statement-list');
-      listContainer.innerHTML = '<div style="text-align:center; padding:30px;">자료를 불러오는 중...</div>';
+      const tbody = document.getElementById('board-body');
+      tbody.innerHTML = '<tr><td colspan="5" class="center">게시글을 불러오는 중...</td></tr>';
 
       try {
         const q = query(collection(db, "statements"), orderBy("createdAt", "desc"));
         const querySnapshot = await getDocs(q);
-        listContainer.innerHTML = '';
+        tbody.innerHTML = '';
         document.getElementById('total-count').textContent = querySnapshot.size;
 
         if (querySnapshot.empty) {
-          listContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted);">등록된 성명서/정책제안이 없습니다.</div>';
+          tbody.innerHTML = '<tr><td colspan="5" class="center">등록된 성명서 및 정책 제안이 없습니다.</td></tr>';
           return;
         }
 
+        let total = querySnapshot.size;
         querySnapshot.forEach((docSnap) => {
           const post = docSnap.data();
-          const badgeClass = post.cat === '정책제안' ? 'policy' : 'state';
-          
-          const article = document.createElement('article');
-          article.className = 'statement-card';
-          article.innerHTML = `
-            <div class="statement-info">
-              <div class="meta">
-                <span class="badge ${badgeClass}">${post.cat || '성명서'}</span>
-                <span class="date">${post.date || '-'}</span>
-              </div>
-              <h3 onclick="openDetailModal('${docSnap.id}')">${post.title}</h3>
-              <p>${post.summary || post.content.substring(0, 100)}...</p>
-            </div>
+          const tr = document.createElement('tr');
+
+          tr.innerHTML = `
+            <td class="center">${total--}</td>
+            <td class="center"><span class="badge cat">${post.cat || '성명서'}</span></td>
+            <td><a class="title-link" onclick="openDetailModal('${docSnap.id}')">${post.title}</a></td>
+            <td class="center">${post.date || '-'}</td>
+            <td class="center">${post.views || 0}</td>
           `;
-          listContainer.appendChild(article);
+          tbody.appendChild(tr);
         });
       } catch (e) {
         console.error(e);
-        listContainer.innerHTML = '<div style="text-align:center; padding:30px;">자료를 불러오지 못했습니다.</div>';
+        tbody.innerHTML = '<tr><td colspan="5" class="center">게시글을 불러오지 못했습니다.</td></tr>';
       }
     }
 
     window.openDetailModal = async (id) => {
       currentPostId = id;
-      const docSnap = await getDoc(doc(db, "statements", id));
+      const docRef = doc(db, "statements", id);
+      const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const post = docSnap.data();
+        await updateDoc(docRef, { views: (post.views || 0) + 1 });
+
         document.getElementById('detail-cat').textContent = post.cat || '성명서';
         document.getElementById('detail-title').textContent = post.title;
         document.getElementById('detail-date').textContent = post.date || '-';
+        document.getElementById('detail-views').textContent = (post.views || 0) + 1;
         document.getElementById('detail-content').textContent = post.content;
         document.getElementById('detail-modal').style.display = 'flex';
       }
@@ -213,7 +234,9 @@
       }
     };
 
-    window.handleLogout = () => signOut(auth).then(() => alert('로그아웃되었습니다.'));
+    window.handleLogout = () => {
+      signOut(auth).then(() => alert('로그아웃되었습니다.'));
+    };
 
     window.handleWrite = async (e) => {
       e.preventDefault();
@@ -230,7 +253,12 @@
         alert('수정되었습니다.');
       } else {
         await addDoc(collection(db, "statements"), {
-          cat, title, content, date: dateStr, createdAt: new Date()
+          cat,
+          title,
+          content,
+          date: dateStr,
+          views: 0,
+          createdAt: new Date()
         });
         alert('등록되었습니다.');
       }
@@ -240,7 +268,8 @@
     };
 
     window.deleteCurrentPost = async () => {
-      if (currentPostId && confirm('정말로 이 글을 삭제하시겠습니까?')) {
+      if (!currentPostId) return;
+      if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
         await deleteDoc(doc(db, "statements", currentPostId));
         window.closeModal('detail-modal');
         renderBoard();
@@ -250,7 +279,7 @@
 
     window.openWriteModal = () => {
       document.getElementById('edit-id').value = '';
-      document.getElementById('write-modal-title').textContent = '성명서 / 정책제안 등록';
+      document.getElementById('write-modal-title').textContent = '성명서/정책제안 글쓰기';
       document.getElementById('form-submit-btn').textContent = '등록하기';
       document.getElementById('write-form').reset();
       document.getElementById('write-modal').style.display = 'flex';
@@ -273,31 +302,60 @@
       document.getElementById('write-modal').style.display = 'flex';
     };
 
-    window.closeModal = (id) => document.getElementById(id).style.display = 'none';
-    window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
+    window.closeModal = (id) => {
+      document.getElementById(id).style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    };
   </script>
 </head>
 <body>
+
   <div class="topline">
     <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
   </div>
   
   <header>
     <div class="wrap navrow">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="군포시민사회단체협의회 홈">
         <span class="brandmark"><span>잇</span></span>
         <span><strong>군포시민사회단체협의회</strong><small>GUNPO CIVIL SOCIETY COUNCIL</small></span>
       </a>
-      <nav id="main-nav">
-        <a class="navitem" href="index.html#about">법인 소개</a>
-        <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">메뉴 ☰</button>
+      <nav id="main-nav" aria-label="주 메뉴">
         <div class="nav-group">
-          <a class="navitem active" href="notice.html">공지 및 소식</a>
+          <span class="navitem">법인 소개 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="index.html#about">소개 및 비전</a>
+            <a href="organization.html">조직도 및 운영 체계</a>
+            <a href="history.html">걸어온길 (연혁)</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
+        </div>
+        <div class="nav-group">
+          <span class="navitem">공지 및 소식 <span class="arrow">▼</span></span>
           <div class="dropdown">
             <a href="notice.html">협의회 공지사항</a>
             <a href="statement.html" class="active">성명서 · 정책 제안</a>
             <a href="gallery.html">언론 보도 및 활동 갤러리</a>
           </div>
+        </div>
+        <div class="nav-group">
+          <span class="navitem">정보 공개 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="info.html?tab=rules">정관 및 운영 규정</a>
+            <a href="info.html?tab=donation">기부금 모금·집행 내역</a>
+            <a href="info.html?tab=audit">결산 및 감사 보고서</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="navitem" href="index.html#participate">참여 및 후원</a>
         </div>
       </nav>
       <a class="nav-cta" href="index.html#participate">함께하기 ↗</a>
@@ -308,7 +366,7 @@
     <div class="wrap">
       <div class="page-title-area">
         <h1>성명서 · 정책 제안</h1>
-        <p>지역 현안에 대한 군포시민사회단체협의회의 공식 입장과 정책 제안 자료를 제공합니다.</p>
+        <p>군포시민사회단체협의회의 주요 성명서와 지역 정책 제안 내용을 전해드립니다.</p>
       </div>
       <div class="sub-tabs">
         <a href="notice.html">협의회 공지사항</a>
@@ -320,8 +378,7 @@
 
   <main class="section">
     <div class="wrap">
-      
-      <!-- 관리자 모드 안내 바 -->
+
       <div class="admin-bar">
         <span id="admin-status-text">상태 확인 중...</span>
         <div>
@@ -331,12 +388,22 @@
       </div>
 
       <div class="board-control">
-        <div class="board-count">전체 <b id="total-count">0</b>건의 자료가 있습니다.</div>
+        <div>전체 <b id="total-count">0</b>건의 게시글</div>
         <button type="button" class="write-btn admin-target admin-only" onclick="openWriteModal()">✏️ 글쓰기</button>
       </div>
 
-      <div class="statement-list" id="statement-list"></div>
-
+      <table class="board-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">번호</th>
+            <th style="width: 120px;">구분</th>
+            <th>제목</th>
+            <th style="width: 120px;">작성일</th>
+            <th style="width: 90px;">조회수</th>
+          </tr>
+        </thead>
+        <tbody id="board-body"></tbody>
+      </table>
     </div>
   </main>
 
@@ -345,9 +412,9 @@
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
       <div class="modal-header">
-        <span class="badge state" id="detail-cat">성명서</span>
+        <span class="badge cat" id="detail-cat">구분</span>
         <h2 id="detail-title" style="margin:5px 0;">제목</h2>
-        <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span></div>
+        <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span> · 조회수: <span id="detail-views"></span></div>
       </div>
       <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px;">내용</div>
       <div class="modal-footer admin-target admin-only">
@@ -361,7 +428,7 @@
   <div id="write-modal" class="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('write-modal')">×</button>
-      <div class="modal-header"><h2 id="write-modal-title" style="margin:0;">성명서 / 정책제안 글쓰기</h2></div>
+      <div class="modal-header"><h2 id="write-modal-title" style="margin:0;">글쓰기</h2></div>
       <form id="write-form" onsubmit="handleWrite(event)">
         <input type="hidden" id="edit-id">
         <div class="form-group">
@@ -369,6 +436,7 @@
           <select id="post-cat">
             <option value="성명서">성명서</option>
             <option value="정책제안">정책제안</option>
+            <option value="논평">논평</option>
           </select>
         </div>
         <div class="form-group">
@@ -377,14 +445,14 @@
         </div>
         <div class="form-group">
           <label>내용</label>
-          <textarea id="post-content" rows="8" required></textarea>
+          <textarea id="post-content" rows="6" required></textarea>
         </div>
         <button type="submit" class="form-submit" id="form-submit-btn">등록하기</button>
       </form>
     </div>
   </div>
 
-  <!-- 로그인 모달 -->
+  <!-- 관리자 로그인 모달 -->
   <div id="login-modal" class="modal">
     <div class="modal-content" style="max-width: 400px;">
       <button class="modal-close" onclick="closeModal('login-modal')">×</button>
@@ -406,5 +474,42 @@
   <footer>
     <div class="wrap">© 군포시민사회단체협의회. All rights reserved.</div>
   </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#main-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const opened = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(opened));
+      });
+    }
+
+    const navGroups = document.querySelectorAll('.nav-group');
+    navGroups.forEach(group => {
+      const item = group.querySelector('.navitem');
+      const dropdown = group.querySelector('.dropdown');
+      if (dropdown && item) {
+        item.addEventListener('click', (e) => {
+          if (window.innerWidth <= 740) {
+            e.preventDefault();
+            navGroups.forEach(otherGroup => {
+              if (otherGroup !== group) otherGroup.classList.remove('open');
+            });
+            group.classList.toggle('open');
+          }
+        });
+      }
+    });
+
+    if (nav) {
+      nav.querySelectorAll('.dropdown a, a.navitem').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
 </body>
 </html>

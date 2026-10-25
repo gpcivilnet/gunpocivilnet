@@ -1,0 +1,14 @@
+@media (max-width: 740px) {
+  /* ... 기존 모바일 스타일 ... */
+  
+  .nav-group { width: 100%; }
+  .navitem { padding: 13px 4px; font-size: 14px; border-top: 1px solid var(--line); width: 100%; display: flex; justify-content: space-between; align-items: center; }
+  .navitem::after { display: none; }
+  .navitem .arrow { font-size: 10px; transition: transform 0.2s; }
+  .nav-group.open .navitem .arrow { transform: rotate(180deg); }
+  
+  /* 모바일 호버 무력화 및 open 클래스 제어 */
+  .nav-group:hover .dropdown { display: none; }
+  .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
+  .nav-group.open .dropdown { display: block; }
+}

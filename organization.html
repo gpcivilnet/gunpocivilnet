@@ -25,7 +25,6 @@
     button { font: inherit; }
     .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
     
-    /* Topbar & Navigation Header */
     .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; letter-spacing: .04em; }
     .topline .wrap { display:flex; justify-content:space-between; gap:16px; padding:8px 0; }
     header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); backdrop-filter: blur(12px); }
@@ -36,68 +35,35 @@
     .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
     .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
     
+    /* PC 네비게이션 및 드롭다운 */
     nav { display:flex; align-items:center; gap:23px; }
-    .nav-group { position: relative; display: inline-block; }
+    .nav-group { position: relative; }
     .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
     .navitem::after { content:""; position:absolute; bottom:18px; left:0; width:0; height:2px; background:var(--green); transition:width .2s; }
     .nav-group:hover .navitem::after, .navitem.active::after { width:100%; }
     
     .dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #ffffff;
-      min-width: 180px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      padding: 8px 0;
-      z-index: 100;
+      display: none; position: absolute; top: 100%; left: 0; background: #ffffff;
+      min-width: 190px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--line);
+      border-radius: 4px; padding: 8px 0; z-index: 100;
     }
     .nav-group:hover .dropdown { display: block; }
-    .dropdown a {
-      display: block;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink);
-      transition: background 0.2s, color 0.2s;
-    }
-    .dropdown a:hover, .dropdown a.active {
-      background: var(--cream);
-      color: var(--green);
-    }
+    .dropdown a { display: block; padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--ink); transition: background 0.2s, color 0.2s; }
+    .dropdown a:hover, .dropdown a.active { background: var(--cream); color: var(--green); }
 
     .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
-    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; }
+    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; cursor: pointer; }
 
-    /* Subpage Header Banner */
     .page-header { background: var(--cream); padding: 50px 0 0; border-bottom: 1px solid var(--line); }
-    .page-title-area { text-align: left; margin-bottom: 30px; }
+    .page-title-area { text-align: left; }
     .page-title-area .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
     .page-title-area h1 { margin: 0; font-size: 36px; color: var(--green-dark); letter-spacing: -.04em; }
     .page-title-area p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
 
-    .sub-tabs { display: flex; gap: 8px; border-bottom: 2px solid var(--line); }
-    .sub-tabs a {
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--muted);
-      border-bottom: 3px solid transparent;
-      margin-bottom: -2px;
-      transition: all 0.2s;
-    }
-    .sub-tabs a.active {
-      color: var(--green);
-      border-bottom-color: var(--green);
-      background: var(--paper);
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
-    }
+    .sub-tabs { display: flex; gap: 8px; margin-top: 25px; border-bottom: 2px solid var(--line); overflow-x: auto; }
+    .sub-tabs a { padding: 12px 22px; font-size: 14px; font-weight: 700; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
+    .sub-tabs a.active { color: var(--green); border-bottom-color: var(--green); background: #fff; border-radius: 4px 4px 0 0; }
 
-    /* Section & Content Layout */
     .section { padding: 70px 0; }
     .org-container { max-width: 960px; margin: 0 auto; }
     
@@ -124,7 +90,6 @@
       text-align: right;
     }
 
-    /* Org Chart Diagram */
     .org-chart-wrapper {
       background: #fafaf7;
       border: 1px solid var(--line);
@@ -149,7 +114,6 @@
       transform: translateY(-2px);
     }
 
-    /* Primary Node Styles */
     .node-primary {
       background: var(--green-dark);
       color: #ffffff;
@@ -158,7 +122,6 @@
       height: 52px;
     }
 
-    /* Secondary Node Styles */
     .node-secondary {
       background: #eff3e6;
       color: var(--green-dark);
@@ -168,7 +131,6 @@
       height: 48px;
     }
 
-    /* Outline Node Styles */
     .node-outline {
       background: #ffffff;
       color: var(--green-dark);
@@ -178,7 +140,6 @@
       height: 48px;
     }
 
-    /* Connecting Lines */
     .v-line {
       width: 2px;
       height: 28px;
@@ -227,7 +188,6 @@
       transform: translateX(-50%);
     }
 
-    /* Details Grid Cards */
     .org-details-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -253,24 +213,39 @@
       line-height: 1.6;
     }
 
-    /* Footer Styles */
     footer { background:#102e26; color:#dce8df; padding:42px 0 26px; margin-top: 60px; }
     .footer-top { display:flex; justify-content:space-between; gap:30px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.17); }
     .footer-brand { font-size:18px; font-weight:800; }
     .footer-copy { max-width:520px; color:#aebfb4; font-size:12px; }
     .footer-bottom { display:flex; justify-content:space-between; gap:20px; padding-top:20px; color:#9db0a4; font-size:11px; }
 
-    /* Responsive Breakpoints */
-    @media (max-width: 768px) {
+    @media (max-width: 950px) {
+      .navrow { min-height:70px; }
+      nav { gap:13px; }
+      .navitem { font-size:12px; }
+      .nav-cta { display:none; }
+    }
+
+    @media (max-width: 740px) {
       .wrap { width:min(100% - 32px, var(--max)); }
+      .topline .wrap { font-size:10px; }
       .navrow { flex-wrap:wrap; padding:13px 0; }
+      .brand { min-width:0; }
+      .brand strong { font-size:15px; }
       .menu-toggle { display:block; }
+      
       nav { display:none; flex-basis:100%; flex-direction:column; align-items:stretch; gap:0; padding:4px 0 8px; }
       nav.open { display:flex; }
+      
       .nav-group { width: 100%; }
-      .navitem { padding:11px 2px; font-size:14px; border-top:1px solid var(--line); width:100%; }
-      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding-left: 15px; }
-      .nav-group:hover .dropdown { display: block; }
+      .navitem { padding:13px 4px; font-size:14px; border-top:1px solid var(--line); width:100%; display: flex; justify-content: space-between; align-items: center; }
+      .navitem::after { display:none; }
+      .navitem .arrow { font-size: 10px; transition: transform 0.2s; }
+      .nav-group.open .navitem .arrow { transform: rotate(180deg); }
+      
+      .nav-group:hover .dropdown { display: none; }
+      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
+      .nav-group.open .dropdown { display: block; }
       
       .section-title-wrap { flex-direction: column; align-items: flex-start; gap: 10px; }
       .section-title-wrap p { text-align: left; }
@@ -284,12 +259,10 @@
   </style>
 </head>
 <body>
-  <!-- Topbar Announcement -->
   <div class="topline">
     <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
   </div>
   
-  <!-- Header & Navigation -->
   <header>
     <div class="wrap navrow">
       <a class="brand" href="index.html" aria-label="군포시민사회단체협의회 홈">
@@ -300,23 +273,40 @@
       
       <nav id="main-nav" aria-label="주 메뉴">
         <div class="nav-group">
-          <a class="navitem active" href="index.html#about">법인 소개</a>
+          <span class="navitem active">법인 소개 <span class="arrow">▼</span></span>
           <div class="dropdown">
             <a href="index.html#about">소개 및 비전</a>
             <a href="organization.html" class="active">조직도 및 운영 체계</a>
             <a href="history.html">걸어온길 (연혁)</a>
           </div>
         </div>
-        <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
-        <a class="navitem" href="index.html#news">공지 및 소식</a>
-        <a class="navitem" href="index.html#disclosure">정보 공개</a>
-        <a class="navitem" href="index.html#participate">참여 및 후원</a>
+        <div class="nav-group">
+          <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
+        </div>
+        <div class="nav-group">
+          <span class="navitem">공지 및 소식 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="notice.html">협의회 공지사항</a>
+            <a href="statement.html">성명서 · 정책 제안</a>
+            <a href="gallery.html">언론 보도 및 활동 갤러리</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <span class="navitem">정보 공개 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="info.html?tab=rules">정관 및 운영 규정</a>
+            <a href="info.html?tab=donation">기부금 모금·집행 내역</a>
+            <a href="info.html?tab=audit">결산 및 감사 보고서</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="navitem" href="index.html#participate">참여 및 후원</a>
+        </div>
       </nav>
       <a class="nav-cta" href="index.html#participate">함께하기 ↗</a>
     </div>
   </header>
 
-  <!-- Subpage Banner -->
   <section class="page-header">
     <div class="wrap">
       <div class="page-title-area">
@@ -332,7 +322,6 @@
     </div>
   </section>
 
-  <!-- Main Section -->
   <main class="section">
     <div class="wrap org-container">
 
@@ -341,14 +330,11 @@
         <p>총회와 이사회를 중심으로 의사결정 체계를 갖추고, 이사장과 사무국을 통해 협의회의 사업을 추진합니다.</p>
       </div>
 
-      <!-- Organizational Chart Diagram -->
       <div class="org-chart-wrapper">
-        <!-- 1. 총회 -->
         <div class="org-node node-primary">총회</div>
 
         <div class="v-line"></div>
 
-        <!-- 2. 이사회 & 고문·감사 -->
         <div class="dual-branch-container">
           <div class="level-row">
             <div class="org-node node-secondary">이사회</div>
@@ -357,21 +343,17 @@
           <div class="horizontal-connector"></div>
         </div>
 
-        <!-- 3. 이사장 -->
         <div class="org-node node-primary">이사장</div>
 
         <div class="v-line"></div>
 
-        <!-- 4. 상임이사 -->
         <div class="org-node node-outline">상임이사</div>
 
         <div class="v-line"></div>
 
-        <!-- 5. 사무국 -->
         <div class="org-node node-outline">사무국</div>
       </div>
 
-      <!-- Organizational Role Details Grid -->
       <div class="org-details-grid">
         <div class="detail-card">
           <h3>상임이사</h3>
@@ -386,7 +368,6 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="wrap">
       <div class="footer-top">
@@ -396,7 +377,7 @@
         </div>
         <div class="footer-copy">
           주소: 경기도 군포시 번영로557번길 44(금정동, 301호)<br>
-          이메일: [대표 이메일 입력]　전화: [전화번호 입력]<br>
+          이메일: [대표 이메일 입력] 전화: [전화번호 입력]<br>
           대중교통 안내<br>
           ◆ 지하철: 4호선 산본역 3번 출구에서 도보 10분 거리<br>
           ◆ 버스: 군포시청 버스정류장<br>
@@ -407,19 +388,46 @@
       </div>
       <div class="footer-bottom">
         <span>© 군포시민사회단체협의회. All rights reserved.</span>
-        <span>법인 소개　 주요 사업　 공지 및 소식　 정보 공개　 참여 및 후원</span>
+        <span>법인 소개  주요 사업  공지 및 소식  정보 공개  참여 및 후원</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // Mobile navigation menu toggle
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('#main-nav');
-    toggle.addEventListener('click', () => {
-      const opened = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(opened));
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const opened = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(opened));
+      });
+    }
+
+    const navGroups = document.querySelectorAll('.nav-group');
+    navGroups.forEach(group => {
+      const item = group.querySelector('.navitem');
+      const dropdown = group.querySelector('.dropdown');
+      if (dropdown && item) {
+        item.addEventListener('click', (e) => {
+          if (window.innerWidth <= 740) {
+            e.preventDefault();
+            navGroups.forEach(otherGroup => {
+              if (otherGroup !== group) otherGroup.classList.remove('open');
+            });
+            group.classList.toggle('open');
+          }
+        });
+      }
     });
+
+    if (nav) {
+      nav.querySelectorAll('.dropdown a, a.navitem').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
   </script>
 </body>
 </html>
