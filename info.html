@@ -328,23 +328,29 @@
       submitBtn.textContent = '처리 중...';
 
       const saveToFirestore = async (finalFileUrl) => {
-        const today = new Date();
-        const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+        try {
+          const today = new Date();
+          const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
 
-        if (editId) {
-          await updateDoc(doc(db, "info_board", editId), { title, fileUrl: finalFileUrl, content });
-          alert('수정되었습니다.');
-        } else {
-          await addDoc(collection(db, "info_board"), {
-            cat: currentTab, title, fileUrl: finalFileUrl, content, date: dateStr, createdAt: new Date()
-          });
-          alert('등록되었습니다.');
+          if (editId) {
+            await updateDoc(doc(db, "info_board", editId), { title, fileUrl: finalFileUrl, content });
+            alert('수정되었습니다.');
+          } else {
+            await addDoc(collection(db, "info_board"), {
+              cat: currentTab, title, fileUrl: finalFileUrl, content, date: dateStr, createdAt: new Date()
+            });
+            alert('등록되었습니다.');
+          }
+
+          window.closeModal('write-modal');
+          await renderBoard();
+        } catch (err) {
+          console.error("저장 중 오류 발생:", err);
+          alert("저장 중 오류가 발생했습니다: " + err.message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = editId ? '수정 완료' : '등록하기';
         }
-
-        window.closeModal('write-modal');
-        renderBoard();
-        submitBtn.disabled = false;
-        submitBtn.textContent = '등록하기';
       };
 
       if (sourceType === 'file') {
