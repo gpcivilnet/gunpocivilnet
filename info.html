@@ -647,7 +647,332 @@
       nav.querySelectorAll('.dropdown a, a.navitem').forEach(link => {
         link.addEventListener('click', () => {
           nav.classList.remove('open');
-          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+          if (toggle<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="군포시민사회단체협의회 - 정보공개">
+  <title>정보공개 | 군포시민사회단체협의회</title>
+  <style>
+    :root {
+      --ink: #172b28;
+      --muted: #5e6d68;
+      --green: #245c4a;
+      --green-dark: #173f34;
+      --lime: #d8e8a5;
+      --cream: #f7f6ef;
+      --paper: #fff;
+      --line: #e2e6dc;
+      --accent: #e5a64a;
+      --danger: #d9534f;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.65; background: var(--paper); }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    
+    .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; letter-spacing: .04em; }
+    .topline .wrap { display:flex; justify-content:space-between; gap:16px; padding:8px 0; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); backdrop-filter: blur(12px); }
+    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width: 240px; }
+    .brandmark { display:grid; place-items:center; width:42px; height:42px; border-radius:50% 50% 48% 12%; background:var(--green); color:white; font-size:22px; transform:rotate(-5deg); }
+    .brandmark span { transform:rotate(5deg); }
+    .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
+    .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
+    
+    /* PC 네비게이션 및 드롭다운 */
+    nav { display:flex; align-items:center; gap:23px; }
+    .nav-group { position: relative; }
+    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
+    .navitem::after { content:""; position:absolute; bottom:18px; left:0; width:0; height:2px; background:var(--green); transition:width .2s; }
+    .nav-group:hover .navitem::after, .navitem.active::after { width:100%; }
+    
+    .dropdown {
+      display: none; position: absolute; top: 100%; left: 0; background: #ffffff;
+      min-width: 200px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--line);
+      border-radius: 4px; padding: 8px 0; z-index: 100;
+    }
+    .nav-group:hover .dropdown { display: block; }
+    .dropdown a { display: block; padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--ink); transition: background 0.2s, color 0.2s; }
+    .dropdown a:hover, .dropdown a.active { background: var(--cream); color: var(--green); }
+
+    .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
+    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; cursor: pointer; }
+
+    .page-header { background: var(--cream); padding: 50px 0 0; border-bottom: 1px solid var(--line); }
+    .page-title-area h1 { margin: 0; font-size: 36px; color: var(--green-dark); letter-spacing: -.04em; }
+    .page-title-area p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+
+    .sub-tabs { display: flex; gap: 8px; margin-top: 25px; border-bottom: 2px solid var(--line); overflow-x: auto; }
+    .sub-tabs button { background: none; border: none; padding: 12px 22px; font-size: 14px; font-weight: 700; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; white-space: nowrap; }
+    .sub-tabs button.active { color: var(--green); border-bottom-color: var(--green); background: #fff; border-radius: 4px 4px 0 0; }
+
+    .section { padding: 50px 0 80px; }
+    .board-control { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 12px; }
+    .board-count { font-size: 14px; color: var(--muted); }
+    .board-count b { color: var(--green); }
+    
+    .write-btn { padding: 8px 16px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+
+    .admin-bar { background: #f4f6f0; padding: 8px 16px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 13px; }
+    .admin-only { display: none !important; }
+    .btn-auth { padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
+
+    .board-table { width: 100%; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+    .board-table th, .board-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .board-table th { background: var(--cream); font-weight: 700; color: var(--green-dark); }
+    .board-table tbody tr { cursor: pointer; transition: background 0.2s; }
+    .board-table tbody tr:hover { background: #fafbf8; }
+
+    .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-content { background: white; padding: 35px; border-radius: 8px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; border: none; background: none; color: var(--muted); }
+    .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 20px; }
+    .modal-header h2 { margin: 10px 0 5px; font-size: 20px; color: var(--green-dark); }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; }
+    .form-submit { width: 100%; padding: 10px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    
+    .modal-footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
+    .btn-edit { color: var(--green); border-color: var(--green); }
+    .btn-delete { color: var(--danger); border-color: var(--danger); }
+    .external-link-btn { display: inline-block; padding: 8px 14px; background: var(--accent); color: white; border-radius: 4px; font-size: 13px; font-weight: 700; text-decoration: none; margin-bottom: 15px; }
+    .external-link-btn:hover { opacity: 0.9; }
+
+    footer { background:#102e26; color:#dce8df; padding:42px 0 26px; margin-top:50px; }
+
+    @media (max-width: 950px) {
+      .board-table th:nth-child(2), .board-table td:nth-child(2) { display: none; }
+      .navrow { min-height:70px; }
+      nav { gap:13px; }
+      .navitem { font-size:12px; }
+      .nav-cta { display:none; }
+    }
+
+    @media (max-width: 740px) {
+      .board-table th:nth-child(2), .board-table td:nth-child(2) { display: none; }
+      .wrap { width:min(100% - 32px, var(--max)); }
+      .topline .wrap { font-size:10px; }
+      .navrow { flex-wrap:wrap; padding:13px 0; }
+      .brand { min-width:0; }
+      .brand strong { font-size:15px; }
+      .menu-toggle { display:block; }
+      
+      nav { display:none; flex-basis:100%; flex-direction:column; align-items:stretch; gap:0; padding:4px 0 8px; }
+      nav.open { display:flex; }
+      
+      .nav-group { width: 100%; }
+      .navitem { padding:13px 4px; font-size:14px; border-top:1px solid var(--line); width:100%; display: flex; justify-content: space-between; align-items: center; }
+      .navitem::after { display:none; }
+      .navitem .arrow { font-size: 10px; transition: transform 0.2s; }
+      .nav-group.open .navitem .arrow { transform: rotate(180deg); }
+      
+      .nav-group:hover .dropdown { display: none; }
+      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
+      .nav-group.open .dropdown { display: block; }
+    }
+  </style>
+
+  <!-- Firebase v9 Web SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy, getDoc, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC46ebJn5gQPBBz_NCjVqtGvWv9CKA7Dac",
+      authDomain: "gunpocivilnet-db4c0.firebaseapp.com",
+      projectId: "gunpocivilnet-db4c0",
+      storageBucket: "gunpocivilnet-db4c0.firebasestorage.app",
+      messagingSenderId: "182564753780",
+      appId: "1:182564753780:web:e6c6616ef99296fe4edc21"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let currentPostId = null;
+    let currentTab = '정관 및 운영규정';
+
+    const tabMap = {
+      'rules': '정관 및 운영규정',
+      'donation': '기부금모금·집행내역',
+      'audit': '결산 및 감사보고'
+    };
+
+    const reverseTabMap = {
+      '정관 및 운영규정': 'rules',
+      '기부금모금·집행내역': 'donation',
+      '결산 및 감사보고': 'audit'
+    };
+
+    function initTabFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam && tabMap[tabParam]) {
+        currentTab = tabMap[tabParam];
+      }
+      updateTabUI();
+    }
+
+    function updateTabUI() {
+      document.querySelectorAll('.sub-tabs button').forEach(btn => {
+        if (btn.getAttribute('data-tab') === currentTab) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      document.querySelectorAll('.dropdown a').forEach(a => {
+        const href = a.getAttribute('href');
+        if (href && href.includes(`tab=${reverseTabMap[currentTab]}`)) {
+          a.classList.add('active');
+        } else {
+          a.classList.remove('active');
+        }
+      });
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      const adminElements = document.querySelectorAll('.admin-target');
+      const loginBtn = document.getElementById('btn-login-modal');
+      const logoutBtn = document.getElementById('btn-logout');
+      const statusText = document.getElementById('admin-status-text');
+
+      if (user) {
+        adminElements.forEach(el => el.classList.remove('admin-only'));
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        statusText.textContent = '🔒 관리자 로그인 상태입니다.';
+      } else {
+        adminElements.forEach(el => el.classList.add('admin-only'));
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        statusText.textContent = '시민 열람 모드입니다.';
+      }
+      initTabFromUrl();
+      renderBoard();
+    });
+
+    window.switchTab = (tabName, event) => {
+      currentTab = tabName;
+      updateTabUI();
+      const tabKey = reverseTabMap[tabName];
+      if (tabKey) {
+        const newUrl = `${window.location.pathname}?tab=${tabKey}`;
+        window.history.pushState({ tab: tabName }, '', newUrl);
+      }
+      renderBoard();
+    };
+
+    window.onpopstate = (e) => {
+      initTabFromUrl();
+      renderBoard();
+    };
+
+    async function renderBoard() {
+      const tableBody = document.getElementById('board-tbody');
+      tableBody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding:30px;">자료를 불러오는 중...</td></tr>';
+
+      try {
+        const q = query(collection(db, "info_board"), where("cat", "==", currentTab), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        tableBody.innerHTML = '';
+        document.getElementById('total-count').textContent = querySnapshot.size;
+
+        if (querySnapshot.empty) {
+          tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding:30px; color:var(--muted);">등록된 ${currentTab} 자료가 없습니다.</td></tr>`;
+          return;
+        }
+
+        querySnapshot.forEach((docSnap) => {
+          const post = docSnap.data();
+          const tr = document.createElement('tr');
+          tr.onclick = () => openDetailModal(docSnap.id);
+          tr.innerHTML = `
+            <td style="font-weight:600; color:var(--ink);">${post.title}</td>
+            <td style="width: 120px; color: var(--muted); font-size: 13px;">${post.date || '-'}</td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      } catch (e) {
+        console.error("불러오기 에러:", e);
+        tableBody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding:30px;">자료를 불러오지 못했습니다.</td></tr>';
+      }
+    }
+
+    window.openDetailModal = async (id) => {
+      currentPostId = id;
+      const docSnap = await getDoc(doc(db, "info_board", id));
+
+      if (docSnap.exists()) {
+        const post = docSnap.data();
+        document.getElementById('detail-title').textContent = post.title;
+        document.getElementById('detail-date').textContent = post.date || '-';
+        document.getElementById('detail-content').textContent = post.content;
+        
+        const linkArea = document.getElementById('detail-link-area');
+        if (post.fileUrl) {
+          linkArea.innerHTML = `<a href="${post.fileUrl}" target="_blank" download="첨부파일" class="external-link-btn">📎 첨부 파일 / 원문 보러가기 ↗</a>`;
+          linkArea.style.display = 'block';
+        } else {
+          linkArea.innerHTML = '';
+          linkArea.style.display = 'none';
+        }
+
+        document.getElementById('detail-modal').style.display = 'flex';
+      }
+    };
+
+    window.handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-pass').value);
+        window.closeModal('login-modal');
+        alert('관리자로 로그인되었습니다.');
+      } catch (err) {
+        alert('로그인 실패: 아이디 또는 비밀번호를 확인해주세요.');
+      }
+    };
+
+    window.handleLogout = () => signOut(auth).then(() => alert('로그아웃되었습니다.'));
+
+    window.toggleAttachInput = () => {
+      const sourceType = document.querySelector('input[name="attachSourceType"]:checked').value;
+      const fileContainer = document.getElementById('fileInputContainer');
+      const urlContainer = document.getElementById('urlInputContainer');
+
+      if (sourceType === 'file') {
+        fileContainer.style.display = 'block';
+        urlContainer.style.display = 'none';
+        document.getElementById('post-url').value = '';
+      } else {
+        fileContainer.style.display = 'none';
+        urlContainer.style.display = 'block';
+        document.getElementById('post-img-file').value = '';
+      }
+    };
+
+    window.handleWrite = async (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('edit-id').value;
+      const title = document.getElementById('post-title').value.trim();
+      const content = document.getElementById('post-content').value.trim();
+      
+      const sourceType = document.querySelector('input[name="attachSourceType"]:checked').value;
+      const fileInput = document.getElementById('post-img-file');
+      let finalFileUrl = document.getElementById('post-img').value || '';
+
+      const submitBtn = document.getElementById('form-submit-btn'); toggle.setAttribute('aria-expanded', 'false');
         });
       });
     }
