@@ -144,6 +144,22 @@
     .admin-only { display: none !important; }
     .btn-auth { padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
 
+    /* Modal Styles */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 22px; cursor: pointer; border: none; background: none; color: var(--muted); }
+    .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; }
+    .form-submit { width: 100%; padding: 10px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    
+    .modal-footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 6px; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
+    .btn-edit { color: var(--green); border-color: var(--green); }
+    .btn-delete { color: var(--danger); border-color: var(--danger); }
+
     footer { background: #102e26; color: #dce8df; padding: 42px 0 26px; font-size: 12px; margin-top: 50px; }
 
     @media (max-width: 950px) {
@@ -178,6 +194,220 @@
       .gallery-grid { grid-template-columns: 1fr; }
     }
   </style>
+
+  <!-- Firebase v9 Web SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC46ebJn5gQPBBz_NCjVqtGvWv9CKA7Dac",
+      authDomain: "gunpocivilnet-db4c0.firebaseapp.com",
+      projectId: "gunpocivilnet-db4c0",
+      storageBucket: "gunpocivilnet-db4c0.firebasestorage.app",
+      messagingSenderId: "182564753780",
+      appId: "1:182564753780:web:e6c6616ef99296fe4edc21"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let currentPostId = null;
+
+    onAuthStateChanged(auth, (user) => {
+      const adminElements = document.querySelectorAll('.admin-target');
+      const loginBtn = document.getElementById('btn-login-modal');
+      const logoutBtn = document.getElementById('btn-logout');
+      const statusText = document.getElementById('admin-status-text');
+
+      if (user) {
+        adminElements.forEach(el => el.classList.remove('admin-only'));
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        statusText.textContent = '🔒 관리자 로그인 상태입니다.';
+      } else {
+        adminElements.forEach(el => el.classList.add('admin-only'));
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        statusText.textContent = '시민 열람 모드입니다.';
+      }
+      renderGallery();
+    });
+
+    async function renderGallery() {
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:var(--muted);">자료를 불러오는 중...</div>';
+
+      try {
+        const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        grid.innerHTML = '';
+        document.getElementById('total-count').textContent = querySnapshot.size;
+
+        if (querySnapshot.empty) {
+          grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:var(--muted);">등록된 갤러리 자료가 없습니다.</div>';
+          return;
+        }
+
+        querySnapshot.forEach((docSnap) => {
+          const post = docSnap.data();
+          const card = document.createElement('div');
+          card.className = 'gallery-card';
+          
+          const thumbHtml = post.imgUrl 
+            ? `<img src="${post.imgUrl}" alt="${post.title}">` 
+            : `<span>이미지 없음</span>`;
+
+          card.innerHTML = `
+            <div class="gallery-thumb" onclick="openDetailModal('${docSnap.id}')" style="cursor:pointer;">${thumbHtml}</div>
+            <div class="gallery-body">
+              <span class="gallery-tag">${post.cat || '활동갤러리'}</span>
+              <h3 class="gallery-title" onclick="openDetailModal('${docSnap.id}')">${post.title}</h3>
+              <div class="gallery-date">${post.date || '-'}</div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        console.error(e);
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px;">자료를 불러오지 못했습니다.</div>';
+      }
+    }
+
+    window.openDetailModal = async (id) => {
+      currentPostId = id;
+      const docSnap = await getDoc(doc(db, "gallery", id));
+
+      if (docSnap.exists()) {
+        const post = docSnap.data();
+        document.getElementById('detail-cat').textContent = post.cat || '활동갤러리';
+        document.getElementById('detail-title').textContent = post.title;
+        document.getElementById('detail-date').textContent = post.date || '-';
+        document.getElementById('detail-content').textContent = post.content;
+        
+        const imgEl = document.getElementById('detail-img');
+        if (post.imgUrl) {
+          imgEl.src = post.imgUrl;
+          imgEl.style.display = 'block';
+        } else {
+          imgEl.style.display = 'none';
+        }
+
+        document.getElementById('detail-modal').style.display = 'flex';
+      }
+    };
+
+    window.handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-pass').value);
+        window.closeModal('login-modal');
+        alert('관리자로 로그인되었습니다.');
+      } catch (err) {
+        alert('로그인 실패: 아이디 또는 비밀번호를 확인해주세요.');
+      }
+    };
+
+    window.handleLogout = () => signOut(auth).then(() => alert('로그아웃되었습니다.'));
+
+    window.handleWrite = async (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('edit-id').value;
+      const cat = document.getElementById('post-cat').value;
+      const title = document.getElementById('post-title').value.trim();
+      const content = document.getElementById('post-content').value.trim();
+      const fileInput = document.getElementById('post-img-file');
+
+      const submitBtn = document.getElementById('form-submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '처리 중...';
+
+      const saveToFirestore = async (imgUrl) => {
+        try {
+          const today = new Date();
+          const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+          if (editId) {
+            await updateDoc(doc(db, "gallery", editId), { cat, title, content, imgUrl });
+            alert('수정되었습니다.');
+          } else {
+            await addDoc(collection(db, "gallery"), {
+              cat, title, content, imgUrl, date: dateStr, createdAt: new Date()
+            });
+            alert('등록되었습니다.');
+          }
+
+          window.closeModal('write-modal');
+          await renderGallery();
+        } catch (err) {
+          console.error(err);
+          alert('저장 중 오류가 발생했습니다.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = editId ? '수정 완료' : '등록하기';
+        }
+      };
+
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        if (file.size > 800 * 1024) {
+          alert('파일 크기가 너무 큽니다. 800KB 이하의 이미지 파일을 선택해 주세요.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = editId ? '수정 완료' : '등록하기';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = async function(uploadEvent) {
+          await saveToFirestore(uploadEvent.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const existingUrl = document.getElementById('post-existing-img').value;
+        await saveToFirestore(existingUrl);
+      }
+    };
+
+    window.deleteCurrentPost = async () => {
+      if (currentPostId && confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+        await deleteDoc(doc(db, "gallery", currentPostId));
+        window.closeModal('detail-modal');
+        renderGallery();
+        alert('삭제되었습니다.');
+      }
+    };
+
+    window.openWriteModal = () => {
+      document.getElementById('edit-id').value = '';
+      document.getElementById('post-existing-img').value = '';
+      document.getElementById('write-modal-title').textContent = '갤러리 자료 등록';
+      document.getElementById('form-submit-btn').textContent = '등록하기';
+      document.getElementById('write-form').reset();
+      document.getElementById('write-modal').style.display = 'flex';
+    };
+
+    window.openEditModal = async () => {
+      const docSnap = await getDoc(doc(db, "gallery", currentPostId));
+      if (!docSnap.exists()) return;
+      const post = docSnap.data();
+
+      window.closeModal('detail-modal');
+      document.getElementById('edit-id').value = currentPostId;
+      document.getElementById('write-modal-title').textContent = '갤러리 자료 수정';
+      document.getElementById('form-submit-btn').textContent = '수정 완료';
+
+      document.getElementById('post-cat').value = post.cat || '활동갤러리';
+      document.getElementById('post-title').value = post.title;
+      document.getElementById('post-content').value = post.content;
+      document.getElementById('post-existing-img').value = post.imgUrl || '';
+
+      document.getElementById('write-modal').style.display = 'flex';
+    };
+
+    window.closeModal = (id) => document.getElementById(id).style.display = 'none';
+    window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
+  </script>
 </head>
 <body>
 
@@ -246,22 +476,95 @@
     <div class="wrap">
 
       <div class="admin-bar">
-        <span id="admin-status-text">시민 열람 모드입니다.</span>
+        <span id="admin-status-text">상태 확인 중...</span>
         <div>
-          <button type="button" class="btn-auth" id="btn-login-modal">관리자 로그인</button>
+          <button type="button" class="btn-auth" id="btn-login-modal" onclick="document.getElementById('login-modal').style.display='flex'">관리자 로그인</button>
+          <button type="button" class="btn-auth" id="btn-logout" style="display:none;" onclick="handleLogout()">로그아웃</button>
         </div>
       </div>
 
       <div class="board-control">
-        <div>전체 <b>0</b>건의 자료</div>
+        <div>전체 <b id="total-count">0</b>건의 자료</div>
+        <button type="button" class="write-btn admin-target admin-only" onclick="openWriteModal()">✏️ 자료 등록</button>
       </div>
 
-      <div class="gallery-grid">
-        <!-- 등록된 사진 게시글이 출력되는 위치입니다 -->
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- 등록된 게시글이 여기에 표시됩니다 -->
       </div>
 
     </div>
   </main>
+
+  <!-- 상세 모달 -->
+  <div id="detail-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
+      <div class="modal-header">
+        <span class="gallery-tag" id="detail-cat">카테고리</span>
+        <h2 id="detail-title" style="margin:5px 0;">제목</h2>
+        <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span></div>
+      </div>
+      <div style="margin-bottom:15px; text-align:center;">
+        <img id="detail-img" src="" alt="첨부 이미지" style="max-width:100%; max-height:350px; border-radius:6px; display:none; margin:0 auto;">
+      </div>
+      <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 80px;">내용</div>
+      <div class="modal-footer admin-target admin-only">
+        <button type="button" class="btn-sm btn-edit" onclick="openEditModal()">수정</button>
+        <button type="button" class="btn-sm btn-delete" onclick="deleteCurrentPost()">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 글쓰기/수정 모달 -->
+  <div id="write-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('write-modal')">×</button>
+      <div class="modal-header"><h2 id="write-modal-title" style="margin:0;">갤러리 자료 등록</h2></div>
+      <form id="write-form" onsubmit="handleWrite(event)">
+        <input type="hidden" id="edit-id">
+        <input type="hidden" id="post-existing-img">
+        <div class="form-group">
+          <label>구분</label>
+          <select id="post-cat">
+            <option value="활동갤러리">활동갤러리</option>
+            <option value="언론보도">언론보도</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>제목</label>
+          <input type="text" id="post-title" required>
+        </div>
+        <div class="form-group">
+          <label>대표 이미지 첨부 (800KB 이하)</label>
+          <input type="file" id="post-img-file" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>내용</label>
+          <textarea id="post-content" rows="6" required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="form-submit-btn">등록하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 로그인 모달 -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <button class="modal-close" onclick="closeModal('login-modal')">×</button>
+      <div class="modal-header"><h2 style="margin:0;">관리자 로그인</h2></div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>이메일 계정</label>
+          <input type="email" id="login-email" required placeholder="admin@example.com">
+        </div>
+        <div class="form-group">
+          <label>비밀번호</label>
+          <input type="password" id="login-pass" required>
+        </div>
+        <button type="submit" class="form-submit">로그인</button>
+      </form>
+    </div>
+  </div>
 
   <footer>
     <div class="wrap">© 군포시민사회단체협의회. All rights reserved.</div>
@@ -275,3 +578,33 @@
         const opened = nav.classList.toggle('open');
         toggle.setAttribute('aria-expanded', String(opened));
       });
+    }
+
+    const navGroups = document.querySelectorAll('.nav-group');
+    navGroups.forEach(group => {
+      const item = group.querySelector('.navitem');
+      const dropdown = group.querySelector('.dropdown');
+      if (dropdown && item) {
+        item.addEventListener('click', (e) => {
+          if (window.innerWidth <= 740) {
+            e.preventDefault();
+            navGroups.forEach(otherGroup => {
+              if (otherGroup !== group) otherGroup.classList.remove('open');
+            });
+            group.classList.toggle('open');
+          }
+        });
+      }
+    });
+
+    if (nav) {
+      nav.querySelectorAll('.dropdown a, a.navitem').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
+</body>
+</html>
