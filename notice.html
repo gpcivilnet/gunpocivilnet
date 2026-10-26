@@ -220,7 +220,16 @@
         document.getElementById('detail-title').textContent = post.title;
         document.getElementById('detail-date').textContent = post.date || '-';
         document.getElementById('detail-views').textContent = (post.views || 0) + 1;
-        document.getElementById('detail-content').textContent = post.content;
+        
+        // 본문 내용 중 URL 자동 감지 및 하이퍼링크 변환 처리
+        const contentEl = document.getElementById('detail-content');
+        if (post.content) {
+          const urlRegex = /(https?:\/\/[^\s]+)/g;
+          contentEl.innerHTML = post.content.replace(urlRegex, '<a href="$1" target="_blank" style="color:var(--green); text-decoration:underline; word-break:break-all;" rel="noopener noreferrer">$1 ↗</a>');
+        } else {
+          contentEl.innerHTML = '';
+        }
+
         document.getElementById('detail-modal').style.display = 'flex';
       }
     };
