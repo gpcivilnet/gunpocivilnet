@@ -68,14 +68,14 @@
     .write-btn { padding: 8px 16px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
     .write-btn:hover { background: var(--green-dark); }
 
-    .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--green); background: white; border-radius: 6px; overflow: hidden; }
-    .board-table th, .board-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--green); background: white; border-radius: 6px; overflow: hidden; table-layout: fixed; }
+    .board-table th, .board-table td { padding: 14px 10px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; word-break: break-word; }
     .board-table th { background: #fbfcf8; font-weight: 700; color: var(--green-dark); text-align: center; }
     .board-table td.center { text-align: center; color: var(--muted); }
-    .title-link { font-weight: 600; color: var(--ink); cursor: pointer; }
+    .title-link { font-weight: 600; color: var(--ink); cursor: pointer; display: block; line-height: 1.4; }
     .title-link:hover { color: var(--green); text-decoration: underline; }
 
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; white-space: nowrap; }
     .badge.notice { background: var(--accent); color: white; }
     .badge.cat { background: #eef3e8; color: var(--green); }
 
@@ -85,6 +85,7 @@
 
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
     .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; }
+    .modal-content img, .modal-content iframe { max-width: 100% !important; height: auto !important; }
     .modal-close { position: absolute; top: 15px; right: 20px; font-size: 22px; cursor: pointer; border: none; background: none; }
     .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
     
@@ -107,6 +108,7 @@
       .nav-cta { display:none; }
     }
 
+    /* 모바일 반응형 처리 */
     @media (max-width: 740px) {
       .wrap { width:min(100% - 32px, var(--max)); }
       .topline .wrap { font-size:10px; }
@@ -127,6 +129,18 @@
       .nav-group:hover .dropdown { display: none; }
       .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
       .nav-group.open .dropdown { display: block; }
+
+      /* 모바일 환경에서 번호(1열), 조회수(5열) 숨김 처리하여 제목 공간 확보 */
+      .board-table colgroup col.col-num,
+      .board-table colgroup col.col-views,
+      .board-table th:nth-child(1),
+      .board-table td:nth-child(1),
+      .board-table th:nth-child(5),
+      .board-table td:nth-child(5) {
+        display: none;
+      }
+      
+      .board-table th, .board-table td { padding: 12px 6px; font-size: 13px; }
     }
   </style>
 
@@ -221,7 +235,7 @@
         document.getElementById('detail-date').textContent = post.date || '-';
         document.getElementById('detail-views').textContent = (post.views || 0) + 1;
         
-        // 본문 내용 중 URL 자동 감지 및 하이퍼링크 변환 처리
+        // 본문 내용 중 URL 자동 감지 및 하이퍼링크 변환 처리[cite: 11]
         const contentEl = document.getElementById('detail-content');
         if (post.content) {
           const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -405,13 +419,20 @@
       </div>
 
       <table class="board-table">
+        <colgroup>
+          <col class="col-num" style="width: 60px;">
+          <col class="col-cat" style="width: 90px;">
+          <col class="col-title">
+          <col class="col-date" style="width: 95px;">
+          <col class="col-views" style="width: 65px;">
+        </colgroup>
         <thead>
           <tr>
-            <th style="width: 80px;">번호</th>
-            <th style="width: 120px;">구분</th>
+            <th>번호</th>
+            <th>구분</th>
             <th>제목</th>
-            <th style="width: 120px;">작성일</th>
-            <th style="width: 90px;">조회수</th>
+            <th>작성일</th>
+            <th>조회수</th>
           </tr>
         </thead>
         <tbody id="board-body"></tbody>
