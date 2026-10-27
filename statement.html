@@ -1,9 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="군포시민사회단체협의회 - 성명서 · 정책 제안">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성명서 · 정책 제안 | 군포시민사회단체협의회</title>
   <style>
     :root {
@@ -39,10 +38,11 @@
     /* PC 네비게이션 및 드롭다운 */
     nav { display:flex; align-items:center; gap:23px; }
     .nav-group { position: relative; }
-    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
+    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
     .navitem::after { content:""; position:absolute; bottom:18px; left:0; width:0; height:2px; background:var(--green); transition:width .2s; }
     .nav-group:hover .navitem::after, .navitem.active::after { width:100%; }
-    
+    .navitem .arrow { font-size: 10px; margin-left: 2px; }
+
     .dropdown {
       display: none; position: absolute; top: 100%; left: 0; background: #ffffff;
       min-width: 190px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--line);
@@ -68,14 +68,14 @@
     .write-btn { padding: 8px 16px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
     .write-btn:hover { background: var(--green-dark); }
 
-    .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--green); background: white; border-radius: 6px; overflow: hidden; }
-    .board-table th, .board-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .board-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--green); background: white; border-radius: 6px; overflow: hidden; table-layout: fixed; }
+    .board-table th, .board-table td { padding: 14px 10px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; word-break: break-word; }
     .board-table th { background: #fbfcf8; font-weight: 700; color: var(--green-dark); text-align: center; }
     .board-table td.center { text-align: center; color: var(--muted); }
-    .title-link { font-weight: 600; color: var(--ink); cursor: pointer; }
+    .title-link { font-weight: 600; color: var(--ink); cursor: pointer; display: block; line-height: 1.4; }
     .title-link:hover { color: var(--green); text-decoration: underline; }
 
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700; white-space: nowrap; }
     .badge.cat { background: #eef3e8; color: var(--green); }
 
     .admin-bar { background: #f4f6f0; padding: 8px 16px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 13px; }
@@ -84,6 +84,7 @@
 
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
     .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; }
+    .modal-content img, .modal-content iframe { max-width: 100% !important; height: auto !important; }
     .modal-close { position: absolute; top: 15px; right: 20px; font-size: 22px; cursor: pointer; border: none; background: none; }
     .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
     
@@ -92,10 +93,12 @@
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; }
     .form-submit { width: 100%; padding: 10px; background: var(--green); color: white; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
     
-    .modal-footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 6px; }
+    .modal-footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 6px; }
     .btn-sm { padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
     .btn-edit { color: var(--green); border-color: var(--green); }
     .btn-delete { color: var(--danger); border-color: var(--danger); }
+    .external-link-btn { display: inline-block; padding: 8px 14px; background: var(--accent); color: white; border-radius: 4px; font-size: 13px; font-weight: 700; text-decoration: none; margin-bottom: 15px; }
+    .external-link-btn:hover { opacity: 0.9; }
 
     footer { background: #102e26; color: #dce8df; padding: 42px 0 26px; font-size: 12px; margin-top: 50px; }
 
@@ -106,6 +109,7 @@
       .nav-cta { display:none; }
     }
 
+    /* 모바일 반응형 처리 */
     @media (max-width: 740px) {
       .wrap { width:min(100% - 32px, var(--max)); }
       .topline .wrap { font-size:10px; }
@@ -120,12 +124,24 @@
       .nav-group { width: 100%; }
       .navitem { padding:13px 4px; font-size:14px; border-top:1px solid var(--line); width:100%; display: flex; justify-content: space-between; align-items: center; }
       .navitem::after { display:none; }
-      .navitem .arrow { font-size: 10px; transition: transform 0.2s; }
+      .navitem .arrow { transition: transform 0.2s; }
       .nav-group.open .navitem .arrow { transform: rotate(180deg); }
       
       .nav-group:hover .dropdown { display: none; }
       .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
       .nav-group.open .dropdown { display: block; }
+
+      /* 모바일 환경에서 번호(1열), 조회수(5열) 숨김 처리하여 제목 공간 확보 */
+      .board-table colgroup col.col-num,
+      .board-table colgroup col.col-views,
+      .board-table th:nth-child(1),
+      .board-table td:nth-child(1),
+      .board-table th:nth-child(5),
+      .board-table td:nth-child(5) {
+        display: none;
+      }
+      
+      .board-table th, .board-table td { padding: 12px 6px; font-size: 13px; }
     }
   </style>
 
@@ -218,7 +234,26 @@
         document.getElementById('detail-title').textContent = post.title;
         document.getElementById('detail-date').textContent = post.date || '-';
         document.getElementById('detail-views').textContent = (post.views || 0) + 1;
-        document.getElementById('detail-content').textContent = post.content;
+        
+        // 첨부파일 링크 버튼 처리
+        const linkArea = document.getElementById('detail-link-area');
+        if (post.fileUrl && post.fileUrl.trim() !== '') {
+          linkArea.innerHTML = `<a href="${post.fileUrl}" target="_blank" download="첨부파일" class="external-link-btn">📎 첨부 파일 / 원문 보러가기 ↗</a>`;
+          linkArea.style.display = 'block';
+        } else {
+          linkArea.innerHTML = '';
+          linkArea.style.display = 'none';
+        }
+
+        // 본문 내용 URL 자동 하이퍼링크 변환
+        const contentEl = document.getElementById('detail-content');
+        if (post.content) {
+          const urlRegex = /(https?:\/\/[^\s]+)/g;
+          contentEl.innerHTML = post.content.replace(urlRegex, '<a href="$1" target="_blank" style="color:var(--green); text-decoration:underline; word-break:break-all;" rel="noopener noreferrer">$1 ↗</a>');
+        } else {
+          contentEl.innerHTML = '';
+        }
+
         document.getElementById('detail-modal').style.display = 'flex';
       }
     };
@@ -238,6 +273,22 @@
       signOut(auth).then(() => alert('로그아웃되었습니다.'));
     };
 
+    window.toggleAttachInput = () => {
+      const sourceType = document.querySelector('input[name="attachSourceType"]:checked').value;
+      const fileContainer = document.getElementById('fileInputContainer');
+      const urlContainer = document.getElementById('urlInputContainer');
+
+      if (sourceType === 'file') {
+        fileContainer.style.display = 'block';
+        urlContainer.style.display = 'none';
+        document.getElementById('post-url').value = '';
+      } else {
+        fileContainer.style.display = 'none';
+        urlContainer.style.display = 'block';
+        document.getElementById('post-img-file').value = '';
+      }
+    };
+
     window.handleWrite = async (e) => {
       e.preventDefault();
       const editId = document.getElementById('edit-id').value;
@@ -245,26 +296,70 @@
       const title = document.getElementById('post-title').value.trim();
       const content = document.getElementById('post-content').value.trim();
 
-      const today = new Date();
-      const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+      const sourceType = document.querySelector('input[name="attachSourceType"]:checked').value;
+      const fileInput = document.getElementById('post-img-file');
+      let finalFileUrl = document.getElementById('edit-file-url').value || '';
 
-      if (editId) {
-        await updateDoc(doc(db, "statements", editId), { cat, title, content });
-        alert('수정되었습니다.');
-      } else {
-        await addDoc(collection(db, "statements"), {
-          cat,
-          title,
-          content,
-          date: dateStr,
-          views: 0,
-          createdAt: new Date()
-        });
-        alert('등록되었습니다.');
+      const submitBtn = document.getElementById('form-submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '처리 중...';
+
+      try {
+        if (sourceType === 'file' && fileInput.files && fileInput.files[0]) {
+          const file = fileInput.files[0];
+          if (file.size > 800 * 1024) {
+            alert('파일 크기가 너무 큽니다. 800KB 이하의 파일을 선택해 주세요.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = editId ? '수정 완료' : '등록하기';
+            return;
+          }
+          
+          finalFileUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (uploadEvent) => resolve(uploadEvent.target.result);
+            reader.onerror = (err) => reject(err);
+            reader.readAsDataURL(file);
+          });
+        } else if (sourceType === 'url') {
+          const urlInput = document.getElementById('post-url').value.trim();
+          if (urlInput) {
+            finalFileUrl = urlInput;
+          }
+        }
+
+        const today = new Date();
+        const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+        if (editId) {
+          await updateDoc(doc(db, "statements", editId), { 
+            cat, 
+            title, 
+            fileUrl: finalFileUrl, 
+            content 
+          });
+          alert('수정되었습니다.');
+        } else {
+          await addDoc(collection(db, "statements"), {
+            cat,
+            title,
+            fileUrl: finalFileUrl,
+            content,
+            date: dateStr,
+            views: 0,
+            createdAt: new Date()
+          });
+          alert('등록되었습니다.');
+        }
+
+        window.closeModal('write-modal');
+        renderBoard();
+      } catch (err) {
+        console.error(err);
+        alert('저장 중 오류가 발생했습니다.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = editId ? '수정 완료' : '등록하기';
       }
-
-      window.closeModal('write-modal');
-      renderBoard();
     };
 
     window.deleteCurrentPost = async () => {
@@ -279,9 +374,14 @@
 
     window.openWriteModal = () => {
       document.getElementById('edit-id').value = '';
-      document.getElementById('write-modal-title').textContent = '성명서/정책제안 글쓰기';
+      document.getElementById('edit-file-url').value = '';
+      document.getElementById('write-modal-title').textContent = '성명서 · 정책 제안 글쓰기';
       document.getElementById('form-submit-btn').textContent = '등록하기';
       document.getElementById('write-form').reset();
+      
+      document.getElementById('typeFile').checked = true;
+      toggleAttachInput();
+
       document.getElementById('write-modal').style.display = 'flex';
     };
 
@@ -292,12 +392,24 @@
 
       window.closeModal('detail-modal');
       document.getElementById('edit-id').value = currentPostId;
-      document.getElementById('write-modal-title').textContent = '글 수정';
+      document.getElementById('edit-file-url').value = post.fileUrl || '';
+      document.getElementById('write-modal-title').textContent = '성명서 · 정책 제안 글 수정';
       document.getElementById('form-submit-btn').textContent = '수정 완료';
 
       document.getElementById('post-cat').value = post.cat || '성명서';
       document.getElementById('post-title').value = post.title;
       document.getElementById('post-content').value = post.content;
+
+      if (post.fileUrl && post.fileUrl.startsWith('http')) {
+        document.getElementById('typeUrl').checked = true;
+        document.getElementById('post-url').value = post.fileUrl;
+        document.getElementById('post-img-file').value = '';
+      } else {
+        document.getElementById('typeFile').checked = true;
+        document.getElementById('post-url').value = '';
+        document.getElementById('post-img-file').value = '';
+      }
+      toggleAttachInput();
 
       document.getElementById('write-modal').style.display = 'flex';
     };
@@ -393,13 +505,20 @@
       </div>
 
       <table class="board-table">
+        <colgroup>
+          <col class="col-num" style="width: 60px;">
+          <col class="col-cat" style="width: 90px;">
+          <col class="col-title">
+          <col class="col-date" style="width: 95px;">
+          <col class="col-views" style="width: 65px;">
+        </colgroup>
         <thead>
           <tr>
-            <th style="width: 80px;">번호</th>
-            <th style="width: 120px;">구분</th>
+            <th>번호</th>
+            <th>구분</th>
             <th>제목</th>
-            <th style="width: 120px;">작성일</th>
-            <th style="width: 90px;">조회수</th>
+            <th>작성일</th>
+            <th>조회수</th>
           </tr>
         </thead>
         <tbody id="board-body"></tbody>
@@ -412,11 +531,15 @@
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
       <div class="modal-header">
-        <span class="badge cat" id="detail-cat">구분</span>
+        <span class="badge cat" id="detail-cat">카테고리</span>
         <h2 id="detail-title" style="margin:5px 0;">제목</h2>
         <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span> · 조회수: <span id="detail-views"></span></div>
       </div>
-      <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px;">내용</div>
+      
+      <div id="detail-link-area" style="display:none;"></div>
+
+      <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px; margin-top: 15px;">내용</div>
+      
       <div class="modal-footer admin-target admin-only">
         <button type="button" class="btn-sm btn-edit" onclick="openEditModal()">수정</button>
         <button type="button" class="btn-sm btn-delete" onclick="deleteCurrentPost()">삭제</button>
@@ -431,18 +554,42 @@
       <div class="modal-header"><h2 id="write-modal-title" style="margin:0;">글쓰기</h2></div>
       <form id="write-form" onsubmit="handleWrite(event)">
         <input type="hidden" id="edit-id">
+        <input type="hidden" id="edit-file-url">
+        
         <div class="form-group">
           <label>구분</label>
           <select id="post-cat">
             <option value="성명서">성명서</option>
             <option value="정책제안">정책제안</option>
-            <option value="논평">논평</option>
           </select>
         </div>
         <div class="form-group">
           <label>제목</label>
           <input type="text" id="post-title" required>
         </div>
+
+        <div class="form-group">
+          <label>첨부 방식</label>
+          <div style="display: flex; gap: 20px; margin-top: 5px;">
+            <label style="font-weight: normal; cursor: pointer;">
+              <input type="radio" name="attachSourceType" id="typeFile" value="file" checked onchange="toggleAttachInput()"> 내 컴퓨터 파일 업로드
+            </label>
+            <label style="font-weight: normal; cursor: pointer;">
+              <input type="radio" name="attachSourceType" id="typeUrl" value="url" onchange="toggleAttachInput()"> 링크 URL 입력
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="fileInputContainer">
+          <label>파일 선택 (PDF, 한글, 이미지 등 800KB 이하)</label>
+          <input type="file" id="post-img-file" accept="image/*,.pdf,.hwp,.hwpx">
+        </div>
+
+        <div class="form-group" id="urlInputContainer" style="display: none;">
+          <label>링크 URL 주소</label>
+          <input type="url" id="post-url" placeholder="https://example.com/document.pdf">
+        </div>
+
         <div class="form-group">
           <label>내용</label>
           <textarea id="post-content" rows="6" required></textarea>
