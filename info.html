@@ -36,7 +36,6 @@
     .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
     .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
     
-    /* PC 네비게이션 및 드롭다운 */
     nav { display:flex; align-items:center; gap:23px; }
     .nav-group { position: relative; }
     .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
@@ -322,7 +321,6 @@
       const sourceType = document.querySelector('input[name="attachSourceType"]:checked').value;
       const fileInput = document.getElementById('post-img-file');
       
-      // 기존 저장된 파일 URL 가져오기 (수정 모드일 때 유지용)
       let finalFileUrl = document.getElementById('edit-file-url').value || '';
 
       const submitBtn = document.getElementById('form-submit-btn');
@@ -483,8 +481,7 @@
           <a class="navitem" href="index.html#participate">참여 및 후원</a>
         </div>
       </nav>
-      <a class="nav-cta" href="index.html#participate">함께하기 ↗</a>
-    </div>
+         </div>
   </header>
 
   <section class="page-header">

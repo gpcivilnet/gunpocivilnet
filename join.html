@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입 신청양식 | 사단법인 군포시민사회단체협의회</title>
+  <style>
+    :root {
+      --ink: #172b28;
+      --muted: #5e6d68;
+      --green: #245c4a;
+      --green-dark: #173f34;
+      --lime: #d8e8a5;
+      --cream: #f7f6ef;
+      --paper: #fff;
+      --line: #e2e6dc;
+      --accent: #e5a64a;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.65; background: var(--paper); }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    
+    /* 상단 배너 및 헤더 */
+    .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; letter-spacing: .04em; }
+    .topline .wrap { display:flex; justify-content:space-between; gap:16px; padding:8px 0; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); backdrop-filter: blur(12px); }
+    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width: 240px; }
+    .brandmark { display:grid; place-items:center; width:42px; height:42px; border-radius:50% 50% 48% 12%; background:var(--green); color:white; font-size:22px; transform:rotate(-5deg); }
+    .brandmark span { transform:rotate(5deg); }
+    .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
+    .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
+    
+    nav { display:flex; align-items:center; gap:23px; }
+    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
+    .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
+
+    /* 페이지 헤더 */
+    .page-header { background: var(--cream); padding: 50px 0; text-align: center; border-bottom: 1px solid var(--line); }
+    .page-header h1 { margin: 0 0 10px; font-size: 32px; color: var(--green-dark); }
+    .page-header p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* 가입 폼 스타일 */
+    .section { padding: 60px 0 90px; }
+    .form-container { max-width: 700px; margin: 0 auto; background: white; border: 1px solid var(--line); border-radius: 8px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+    .form-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+    .form-table th, .form-table td { padding: 14px 16px; border: 1px solid var(--line); font-size: 14px; }
+    .form-table th { background: #f8f9f4; width: 160px; text-align: left; color: var(--green-dark); font-weight: 700; }
+    .form-table td input, .form-table td select { width: 100%; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+    .form-table td input:focus, .form-table td select:focus { outline: none; border-color: var(--green); }
+    
+    .submit-btn { display: block; width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .submit-btn:hover { background: var(--green-dark); }
+    .privacy-notice { font-size: 12px; color: var(--muted); margin-bottom: 20px; padding: 12px; background: #f8f9f4; border-radius: 4px; line-height: 1.5; }
+
+    footer { background: #102e26; color: #dce8df; padding: 42px 0 26px; font-size: 12px; margin-top: 50px; }
+
+    @media (max-width: 740px) {
+      .form-container { padding: 20px 15px; }
+      .form-table th, .form-table td { display: block; width: 100%; }
+      .form-table th { border-bottom: none; padding-bottom: 4px; color: var(--green); }
+      .form-table td { border-top: none; padding-top: 4px; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topline">
+    <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
+  </div>
+  
+  <header>
+    <div class="wrap navrow">
+      <a class="brand" href="index.html" aria-label="군포시민사회단체협의회 홈">
+        <span class="brandmark"><span>잇</span></span>
+        <span><strong>군포시민사회단체협의회</strong><small>GUNPO CIVIL SOCIETY COUNCIL</small></span>
+      </a>
+      <nav aria-label="주 메뉴">
+        <a class="navitem" href="index.html">홈으로</a>
+      </nav>
+          </div>
+  </header>
+
+  <section class="page-header">
+    <div class="wrap">
+      <div style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px;">사단법인 군포시민사회단체협의회</div>
+      <h1>회원가입 신청양식</h1>
+      <p>후원 및 회원가입을 위한 신청서를 작성해 주시면 확인 후 연락드리겠습니다.</p>
+    </div>
+  </section>
+
+  <main class="section">
+    <div class="wrap">
+      <div class="form-container">
+        <!-- EmailJS 전송을 위한 폼 (id 추가) -->
+        <form id="join-form">
+          
+          <div class="privacy-notice">
+            <strong>[개인정보 수집 및 이용 안내]</strong><br>
+            원활한 후원 관리 및 연락을 위해 성명, 연락처, 주민등록번호(자동이체 등록용) 등의 정보를 수집하며, 입력하신 정보는 안전하게 관리됩니다.
+          </div>
+
+          <table class="form-table">
+            <tr>
+              <th>이름 (예금주)</th>
+              <td><input type="text" name="name" required placeholder="성함을 입력하세요"></td>
+            </tr>
+            <tr>
+              <th>주민등록번호</th>
+              <td>
+                <input type="text" name="ssn" required placeholder="801231-1234567" maxlength="14" pattern="\d{6}-\d{7}" title="생년월일 6자리와 뒷자리 7자리를 형식(- 포함)에 맞춰 입력해주세요">
+              </td>
+            </tr>
+            <tr>
+              <th>연락처</th>
+              <td><input type="tel" name="phone" required placeholder="010-0000-0000"></td>
+            </tr>
+            <tr>
+              <th>이메일</th>
+              <td><input type="email" name="email" required placeholder="example@email.com"></td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td><input type="text" name="address" placeholder="도로명 주소를 입력하세요"></td>
+            </tr>
+            <tr>
+              <th>후원금액</th>
+              <td>
+                <select name="donation_amount">
+                  <option value="1만원">1만 원</option>
+                  <option value="2만원">3만 원</option>
+                  <option value="3만원">5만 원</option>
+                  <option value="기타">기타 직접 입력</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>출금 계좌정보</th>
+              <td><input type="text" name="account" required placeholder="예: 국민은행 123456-04-123456" style="background:#fff;"></td>
+            </tr>
+          </table>
+
+          <button type="submit" class="submit-btn" id="submit-btn">회원가입 신청하기</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">© 군포시민사회단체협의회. All rights reserved.</div>
+  </footer>
+
+  <!-- EmailJS SDK 로드 -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    // 본인의 EmailJS Public Key를 입력하세요
+    emailjs.init("7QskddFIqQBq4dmXX");
+
+    document.getElementById('join-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const btn = document.getElementById('submit-btn');
+      btn.innerText = '신청 접수 중...';
+      btn.disabled = true;
+
+      // EmailJS 서비스 ID와 템플릿 ID를 입력하세요
+      emailjs.sendForm('service_hshmjdl', 'template_fy8kb9x', this)
+        .then(function() {
+            alert('회원가입 신청이 성공적으로 접수되었습니다. 감사합니다!');
+            location.reload();
+        }, function(error) {
+            alert('접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
+            btn.innerText = '회원가입 신청하기';
+            btn.disabled = false;
+        });
+    });
+  </script>
+
+</body>
+</html>
