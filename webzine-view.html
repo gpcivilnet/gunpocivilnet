@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>웹진 상세보기 - 군포시민사회단체협의회</title>
+  <meta name="description" content="군포시민사회단체협의회 - 웹진 상세 보기">
+  <title>웹진 상세 : 군포시민사회단체협의회</title>
   <style>
     :root {
       --ink: #172b28;
@@ -14,73 +15,232 @@
       --cream: #f7f6ef;
       --paper: #fff;
       --line: #e2e6dc;
-      --max: 800px; /* 본문 집중도를 위해 폭을 좁게 설정 */
+      --accent: #e5a64a;
+      --max: 1160px;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", sans-serif; color: var(--ink); line-height: 1.8; background: var(--paper); }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.65; background: var(--paper); }
     a { color: inherit; text-decoration: none; }
-    .wrap { width: min(1160px, calc(100% - 44px)); margin-inline: auto; }
-    .content-wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    button { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
     
-    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); }
-    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; }
-    .brand { font-weight: 800; font-size: 17px; color: var(--green-dark); }
+    /* 상단 공통 네비게이션 스타일 (성명서/메인과 완전 통일) */
+    .topline { background: var(--green-dark); color: #e9f0e8; font-size: 12px; letter-spacing: .04em; }
+    .topline .wrap { display:flex; justify-content:space-between; gap:16px; padding:8px 0; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); backdrop-filter: blur(12px); }
+    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width: 240px; }
+    .brandmark { display:grid; place-items:center; width:42px; height:42px; border-radius:50% 50% 48% 12%; background:var(--green); color:white; font-size:22px; transform:rotate(-5deg); }
+    .brandmark span { transform:rotate(5deg); }
+    .brand strong { display:block; font-size:17px; letter-spacing:-.04em; line-height:1.3; }
+    .brand small { display:block; margin-top:4px; font-size:10px; color:var(--muted); letter-spacing:.11em; }
+    
+    /* PC 네비게이션 및 드롭다운 */
+    nav { display:flex; align-items:center; gap:23px; }
+    .nav-group { position: relative; }
+    .navitem { position:relative; padding:27px 0; font-size:14px; font-weight:700; white-space:nowrap; display: inline-block; cursor: pointer; }
+    .navitem::after { content:""; position:absolute; bottom:18px; left:0; width:0; height:2px; background:var(--green); transition:width .2s; }
+    .nav-group:hover .navitem::after, .navitem:hover::after, .navitem:focus-visible::after { width:100%; }
+    
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      min-width: 190px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 8px 0;
+      z-index: 100;
+    }
+    .nav-group:hover .dropdown { display: block; }
+    .dropdown a {
+      display: block;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      transition: background 0.2s, color 0.2s;
+    }
+    .dropdown a:hover {
+      background: var(--cream);
+      color: var(--green);
+    }
+    .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; cursor: pointer; }
 
-    .article-header { background: var(--cream); padding: 70px 0 50px; border-bottom: 1px solid var(--line); text-align: center; }
-    .article-tag { display: inline-block; background: var(--green); color: white; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; margin-bottom: 16px; }
-    .article-header h1 { font-size: clamp(28px, 4vw, 40px); color: var(--green-dark); margin: 0 0 15px; line-height: 1.3; }
-    .article-info { color: var(--muted); font-size: 14px; }
+    /* 페이지 타이틀 섹션 */
+    .page-header { background: var(--cream); border-bottom: 1px solid var(--line); padding: 50px 0; }
+    .page-header .vol-tag { color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; display: inline-block; }
+    .page-header h1 { margin: 0 0 12px; font-size: clamp(28px, 3.5vw, 40px); letter-spacing: -.04em; line-height: 1.25; }
+    .page-header .meta-info { display: flex; gap: 20px; color: var(--muted); font-size: 14px; margin-top: 15px; }
 
-    .article-body { padding: 60px 0 90px; font-size: 17px; color: #33433e; }
-    .article-body h2 { font-size: 24px; color: var(--green-dark); margin-top: 40px; border-left: 4px solid var(--green); padding-left: 12px; }
-    .article-body p { margin-bottom: 24px; }
-    .article-body blockquote { margin: 30px 0; padding: 20px 24px; background: var(--cream); border-left: 4px solid var(--accent, #e5a64a); font-style: italic; color: var(--green-dark); }
+    /* 웹진 상세 본문 영역 스타일 */
+    .content-section { padding: 60px 0; }
+    .webzine-article { max-width: 800px; margin: 0 auto; background: white; border: 1px solid var(--line); padding: 50px; border-radius: 8px; }
+    .webzine-article h2 { font-size: 24px; color: var(--green-dark); margin-top: 36px; margin-bottom: 16px; letter-spacing: -.03em; border-left: 3px solid var(--accent); padding-left: 12px; }
+    .webzine-article p { font-size: 16px; color: #333; line-height: 1.8; margin-bottom: 24px; }
+    
+    /* 목록으로 돌아가기 버튼 박스 */
+    .btn-wrap { max-width: 800px; margin: 30px auto 0; display: flex; justify-content: space-between; align-items: center; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--green-dark); color: white; border-radius: 4px; font-weight: 700; font-size: 14px; transition: background 0.2s; }
+    .btn-back:hover { background: var(--green); }
 
-    .back-list { text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--line); }
-    .back-btn { display: inline-block; padding: 12px 24px; background: var(--green); color: white; border-radius: 4px; font-weight: 700; font-size: 14px; }
+    footer { background:#102e26; color:#dce8df; padding:42px 0 26px; margin-top: 60px; }
+    .footer-top { display:flex; justify-content:space-between; gap:30px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.17); }
+    .footer-brand { font-size:18px; font-weight:800; }
+    .footer-copy { max-width:520px; color:#aebfb4; font-size:12px; line-height:1.6; }
+    .footer-bottom { display:flex; justify-content:space-between; gap:20px; padding-top:20px; color:#9db0a4; font-size:11px; }
+    .footer-links { display: flex; gap: 15px; flex-wrap: wrap; }
+    .footer-links a:hover { color: #fff; }
+    .notice { margin-top:14px; font-size:11px; color:#9db0a4; }
 
-    footer { background: #102e26; color: #dce8df; padding: 40px 0; font-size: 12px; }
+    @media (max-width: 740px) {
+      .navrow { flex-wrap:wrap; padding:13px 0; }
+      .menu-toggle { display:block; }
+      nav { display:none; flex-basis:100%; flex-direction:column; align-items:stretch; gap:0; padding:4px 0 8px; }
+      nav.open { display:flex; }
+      .nav-group { width: 100%; }
+      .navitem { padding:13px 4px; font-size:14px; border-top:1px solid var(--line); width:100%; display: flex; justify-content: space-between; align-items: center; }
+      .navitem::after { display:none; }
+      .nav-group:hover .dropdown { display: none; }
+      .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
+      .nav-group.open .dropdown { display: block; }
+      .webzine-article { padding: 25px; }
+      .footer-top, .footer-bottom { flex-direction:column; }
+    }
   </style>
 </head>
 <body>
-
+  <div class="topline">
+    <div class="wrap"><span>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포</span><span>시민의 참여로 만드는 지속가능한 지역사회</span></div>
+  </div>
+  
   <header>
     <div class="wrap navrow">
-      <a class="brand" href="index.html">군포시민사회단체협의회</a>
-      <a href="webzine.html" style="font-size: 14px; font-weight: 700; color: var(--green);">← 목록으로 돌아가기</a>
+      <a class="brand" href="index.html" aria-label="군포시민사회단체협의회 홈">
+        <span class="brandmark"><span>잇</span></span>
+        <span><strong>군포시민사회단체협의회</strong><small>GUNPO CIVIL SOCIETY COUNCIL</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">메뉴 ☰</button>
+      <nav id="main-nav" aria-label="주 메뉴">
+        <div class="nav-group">
+          <span class="navitem">법인 소개 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="index.html#about">소개 및 비전</a>
+            <a href="organization.html">조직도 및 운영 체계</a>
+            <a href="history.html">걸어온길 (연혁)</a>
+          </div>
+        </div>
+        
+        <div class="nav-group">
+          <a class="navitem" href="index.html#activities">주요 사업 &amp; 활동</a>
+        </div>
+        
+        <div class="nav-group">
+          <span class="navitem">공지 및 소식 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="notice.html">협의회 공지사항</a>
+            <a href="statement.html">성명서 · 정책 제안</a>
+            <a href="gallery.html">언론 보도 및 활동 갤러리</a>
+            <a href="webzine.html">웹진 아카이브</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <span class="navitem">정보 공개 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="info.html?tab=rules">정관 및 운영 규정</a>
+            <a href="info.html?tab=donation">기부금 모금·집행 내역</a>
+            <a href="info.html?tab=audit">결산 및 감사 보고서</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <span class="navitem">참여 및 후원 <span class="arrow">▼</span></span>
+          <div class="dropdown">
+            <a href="join.html">회원가입</a>
+            <a href="index.html#participate">참여 및 후원 안내</a>
+          </div>
+        </div>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section class="article-header">
-      <div class="content-wrap">
-        <span class="article-tag">VOL. 02 · 초점과 이슈</span>
-        <h1>군포 시민사회의 일상, 그리고 미래</h1>
-        <div class="article-info">발행일: 2026년 11월 1일 | 글쓴이: 군포시민사회 편집실</div>
+    <section class="page-header">
+      <div class="wrap">
+        <span class="vol-tag">VOL. 01 (창간호)</span>
+        <h1>민주주의 30년의 자산을 넘어, 다음 30년으로</h1>
+        <div class="meta-info">
+          <span>발행일: 2026. 10</span>
+          <span>발행처: 군포시민사회단체협의회</span>
+        </div>
       </div>
     </section>
 
-    <article class="article-body">
-      <div class="content-wrap">
-        <p>군포의 신도시 재정비와 대규모 개발 사업들이 가속화되고 있는 지금, 우리는 공간의 변화 속에서 무엇을 지키고 무엇을 새롭게 세워야 할지 고민의 기로에 서 있습니다.</p>
-        
-        <h2>개발을 넘어 생태와 공존으로</h2>
-        <p>단순히 아파트를 높이 짓고 도심을 정비하는 것을 넘어, 그 안에서 살아가는 주민들의 관계망과 자연과의 공존 방식은 어떻게 설계되어야 할까요? 시민사회의 목소리가 더욱 절실한 시점입니다.</p>
+    <section class="content-section">
+      <div class="wrap">
+        <article class="webzine-article">
+          <h2>들어가며: 새로운 30년을 여는 길</h2>
+          <p>군포의 시민사회는 지난 30여 년간 지역주민과 호흡하며 민주주의의 기초를 다지고 다양한 공동체 운동을 일구어 왔습니다. 이제 우리는 과거의 성과를 되돌아보고, 다음 세대의 시민자산으로 온전히 이어주기 위한 새로운 도전을 시작합니다.</p>
+          
+          <h2>시민사회의 자산과 사회적 상속</h2>
+          <p>그동안 축적된 경험과 관계망은 특정 단체나 개인의 소유가 아닌, 우리 지역사회가 함께 일궈낸 소중한 공적 유산입니다. 이를 다음 세대의 활동가들과 시민들에게 안정적으로 전승하는 '사회적 상속' 시스템이 무엇보다 절실한 시점입니다.</p>
+          
+          <h2>함께 만드는 생태민주주의 도시 군포</h2>
+          <p>도시의 변화와 재개발 과정에서도 사람과 자연, 공동체가 공존할 수 있는 생태민주주의적 대안을 모색해야 합니다. 지속가능한 지역사회를 향한 우리의 발걸음에 더 많은 시민과 활동가 여러분의 연대와 참여를 부탁드립니다.</p>
+        </article>
 
-        <blockquote>“도시의 진짜 자산은 콘크리트 구조물이 아니라 그 속에서 숨 쉬는 사람들과 초록의 생태 감수성입니다.”</blockquote>
-
-        <p>앞으로 본 웹진을 통해 현장의 생생한 목소리와 대안적인 정책 담론들을 차곡차곡 아카이브해 나가고자 합니다. 독자 여러분의 따뜻한 관심과 참여를 부탁드립니다.</p>
-
-        <div class="back-list">
-          <a href="webzine.html" class="back-btn">목록으로 돌아가기</a>
+        <div class="btn-wrap">
+          <a href="webzine.html" class="btn-back">← 목록으로 돌아가기</a>
         </div>
       </div>
-    </article>
+    </section>
   </main>
 
   <footer>
-    <div class="wrap" style="text-align: center;">© 군포시민사회단체협의회. All rights reserved.</div>
+    <div class="wrap">
+      <div class="footer-top">
+        <div><div class="footer-brand">군포시민사회단체협의회</div><div class="notice">민주주의의 자산을 다음 세대의 시민자산으로</div></div>
+        <div class="footer-copy">주소: 경기도 군포시 번영로557번길 44(금정동, 301호)<br>이메일: gunpocivilnet@gmail.com 전화: [전화번호 입력]</div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 군포시민사회단체협의회. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="index.html#about">법인 소개</a>
+          <a href="index.html#activities">주요 사업</a>
+          <a href="notice.html">공지 및 소식</a>
+          <a href="info.html">정보 공개</a>
+          <a href="join.html">참여 및 후원</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#main-nav');
+    toggle.addEventListener('click', () => {
+      const opened = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(opened));
+    });
+    
+    document.querySelectorAll('.nav-group').forEach(group => {
+      const item = group.querySelector('.navitem');
+      const dropdown = group.querySelector('.dropdown');
+      if (dropdown && item) {
+        item.addEventListener('click', (e) => {
+          if (window.innerWidth <= 740) {
+            e.preventDefault();
+            document.querySelectorAll('.nav-group').forEach(og => { if (og !== group) og.classList.remove('open'); });
+            group.classList.toggle('open');
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
