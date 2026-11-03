@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>웹진 아카이브 - 군포시민사회단체협의회</title>
+  <style>
+    :root {
+      --ink: #172b28;
+      --muted: #5e6d68;
+      --green: #245c4a;
+      --green-dark: #173f34;
+      --lime: #d8e8a5;
+      --cream: #f7f6ef;
+      --paper: #fff;
+      --line: #e2e6dc;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", sans-serif; color: var(--ink); line-height: 1.65; background: var(--paper); }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin-inline: auto; }
+    
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid rgba(23,63,52,.10); }
+    .navrow { min-height: 78px; display:flex; align-items:center; justify-content:space-between; }
+    .brand { font-weight: 800; font-size: 17px; color: var(--green-dark); }
+
+    .sub-hero { background: var(--cream); padding: 60px 0; border-bottom: 1px solid var(--line); }
+    .sub-hero h1 { margin: 0 0 10px; font-size: 36px; color: var(--green-dark); }
+    .sub-hero p { margin: 0; color: var(--muted); font-size: 16px; }
+
+    .section { padding: 60px 0 90px; }
+    .webzine-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .webzine-card { border: 1px solid var(--line); background: white; border-radius: 6px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .webzine-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(23,43,40,0.08); }
+    .webzine-thumb { background: var(--green-dark); color: var(--lime); padding: 30px 20px; font-weight: 800; font-size: 14px; letter-spacing: 0.1em; }
+    .webzine-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+    .webzine-date { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .webzine-body h3 { margin: 0 0 12px; font-size: 20px; color: var(--ink); line-height: 1.4; }
+    .webzine-body p { margin: 0 0 20px; color: var(--muted); font-size: 14px; flex-grow: 1; }
+    .read-btn { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; color: var(--green); }
+
+    footer { background: #102e26; color: #dce8df; padding: 40px 0; font-size: 12px; }
+
+    @media (max-width: 900px) {
+      .webzine-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap navrow">
+      <a class="brand" href="index.html">군포시민사회단체협의회</a>
+      <a href="index.html" style="font-size: 14px; font-weight: 700; color: var(--green);">← 홈으로 돌아가기</a>
+    </div>
+  </header>
+
+  <section class="sub-hero">
+    <div class="wrap">
+      <h1>웹진 아카이브</h1>
+      <p>지역과 사람, 일상의 이야기를 담은 군포시민사회단체협의회 웹진을 모아봅니다.</p>
+    </div>
+  </section>
+
+  <main class="section">
+    <div class="wrap">
+      <div class="webzine-grid">
+        <!-- 웹진 카드 1 -->
+        <article class="webzine-card">
+          <div class="webzine-thumb">VOL. 02</div>
+          <div class="webzine-body">
+            <div class="webzine-date">2026. 11 발행</div>
+            <h3>군포 시민사회의 일상, 그리고 미래</h3>
+            <p>우리가 놓치지 말아야 할 시민사회의 가치를 이야기합니다.</p>
+            <a href="webzine-view.html" class="read-btn">웹진 읽어보기 ↗</a>
+          </div>
+        </article>
+
+        <!-- 웹진 카드 2 -->
+        <article class="webzine-card">
+          <div class="webzine-thumb" style="background: var(--green);">VOL. 01 (창간호)</div>
+          <div class="webzine-body">
+            <div class="webzine-date">2026. 10 발행</div>
+            <h3>민주주의 30년의 자산을 넘어, 다음 30년으로</h3>
+            <p>군포 시민사회가 걸어온 길과 앞으로 만들어갈 새로운 지속가능한 시민자산에 대한 기록.</p>
+            <a href="webzine-view.html" class="read-btn">웹진 읽어보기 ↗</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">© 군포시민사회단체협의회. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>
