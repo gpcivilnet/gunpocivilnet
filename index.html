@@ -252,6 +252,7 @@
             <a href="notice.html">협의회 공지사항</a>
             <a href="statement.html">성명서 · 정책 제안</a>
             <a href="gallery.html">언론 보도 및 활동 갤러리</a>
+            <a href="webzine.html">웹진</a>
           </div>
         </div>
 
@@ -264,7 +265,6 @@
           </div>
         </div>
 
-        <!-- '참여 및 후원' 메뉴를 드롭다운 구조로 수정하여 회원가입 서브메뉴 추가 -->
         <div class="nav-group">
           <span class="navitem">참여 및 후원 <span class="arrow">▼</span></span>
           <div class="dropdown">
@@ -273,7 +273,7 @@
           </div>
         </div>
       </nav>
-          </div>
+    </div>
   </header>
 
   <main id="home">
@@ -405,6 +405,7 @@
             <a class="news-item" href="notice.html"><strong>협의회 공지사항</strong><span>바로가기 ↗</span></a>
             <a class="news-item" href="statement.html"><strong>성명서 · 정책 제안</strong><span>바로가기 ↗</span></a>
             <a class="news-item" href="gallery.html"><strong>언론 보도 및 활동 갤러리</strong><span>바로가기 ↗</span></a>
+            <a class="news-item" href="webzine.html"><strong>웹진</strong><span>바로가기 ↗</span></a>
           </div>
         </div>
       </div>
@@ -454,16 +455,13 @@
       
       if (dropdown && item) {
         item.addEventListener('click', (e) => {
-          // 모바일 화면(740px 이하)에서 서브메뉴가 있는 항목을 클릭했을 때
           if (window.innerWidth <= 740) {
             e.preventDefault();
-            // 다른 열려있는 메뉴 닫기
             navGroups.forEach(otherGroup => {
               if (otherGroup !== group) {
                 otherGroup.classList.remove('open');
               }
             });
-            // 현재 메뉴 토글
             group.classList.toggle('open');
           }
         });
