@@ -444,7 +444,7 @@
     </div>
   </main>
 
-  <!-- 상세 모달 -->
+ <!-- 상세 모달 -->
   <div id="detail-modal" class="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
@@ -453,7 +453,7 @@
         <h2 id="detail-title" style="margin:5px 0;">제목</h2>
         <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span> · 조회수: <span id="detail-views"></span></div>
       </div>
-      <!-- 줄바꿈 보존(white-space: pre-wrap) 및 이미지 HTML 렌더링 지원 -->
+      <!-- 고정된 <img> 태그가 있다면 이 위에서 삭제해야 각 게시글의 본문(detail-content)만 출력됩니다 -->
       <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px; line-height: 1.7;">내용</div>
       <div class="modal-footer admin-target admin-only">
         <button type="button" class="btn-sm btn-edit" onclick="openEditModal()">수정</button>
