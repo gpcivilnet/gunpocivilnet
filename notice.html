@@ -84,8 +84,12 @@
     .btn-auth { padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 4px; border: 1px solid var(--line); cursor: pointer; background: white; }
 
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
-    .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; }
-    .modal-content img, .modal-content iframe { max-width: 100% !important; height: auto !important; }
+    .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
+    
+    /* 모달 내 본문 이미지 반응형 스타일 */
+    .modal-content img { max-width: 100% !important; height: auto !important; border-radius: 6px; margin: 15px auto; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: block; }
+    .modal-content iframe { max-width: 100% !important; height: auto !important; }
+
     .modal-close { position: absolute; top: 15px; right: 20px; font-size: 22px; cursor: pointer; border: none; background: none; }
     .modal-header { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
     
@@ -108,7 +112,6 @@
       .nav-cta { display:none; }
     }
 
-    /* 모바일 반응형 처리 */
     @media (max-width: 740px) {
       .wrap { width:min(100% - 32px, var(--max)); }
       .topline .wrap { font-size:10px; }
@@ -130,7 +133,6 @@
       .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
       .nav-group.open .dropdown { display: block; }
 
-      /* 모바일 환경에서 번호(1열), 조회수(5열) 숨김 처리하여 제목 공간 확보 */
       .board-table colgroup col.col-num,
       .board-table colgroup col.col-views,
       .board-table th:nth-child(1),
@@ -235,11 +237,14 @@
         document.getElementById('detail-date').textContent = post.date || '-';
         document.getElementById('detail-views').textContent = (post.views || 0) + 1;
         
-        // 본문 내용 중 URL 자동 감지 및 하이퍼링크 변환 처리[cite: 11]
+        // 본문 HTML 렌더링 (이미지 태그 허용) 및 일반 URL 하이퍼링크 변환
         const contentEl = document.getElementById('detail-content');
         if (post.content) {
-          const urlRegex = /(https?:\/\/[^\s]+)/g;
-          contentEl.innerHTML = post.content.replace(urlRegex, '<a href="$1" target="_blank" style="color:var(--green); text-decoration:underline; word-break:break-all;" rel="noopener noreferrer">$1 ↗</a>');
+          let formattedContent = post.content;
+          // HTML 태그 속성(src="http...") 내부의 URL은 제외하고 순수 텍스트 URL만 링크로 변환
+          const urlRegex = /(?<!=["'])(https?:\/\/[^\s<"']+)/g;
+          formattedContent = formattedContent.replace(urlRegex, '<a href="$1" target="_blank" style="color:var(--green); text-decoration:underline; word-break:break-all;" rel="noopener noreferrer">$1 ↗</a>');
+          contentEl.innerHTML = formattedContent;
         } else {
           contentEl.innerHTML = '';
         }
@@ -384,7 +389,7 @@
           <a class="navitem" href="index.html#participate">참여 및 후원</a>
         </div>
       </nav>
-         </div>
+    </div>
   </header>
 
   <section class="page-header">
@@ -448,7 +453,8 @@
         <h2 id="detail-title" style="margin:5px 0;">제목</h2>
         <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span> · 조회수: <span id="detail-views"></span></div>
       </div>
-      <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px;">내용</div>
+      <!-- 줄바꿈 보존(white-space: pre-wrap) 및 이미지 HTML 렌더링 지원 -->
+      <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px; line-height: 1.7;">내용</div>
       <div class="modal-footer admin-target admin-only">
         <button type="button" class="btn-sm btn-edit" onclick="openEditModal()">수정</button>
         <button type="button" class="btn-sm btn-delete" onclick="deleteCurrentPost()">삭제</button>
@@ -476,8 +482,8 @@
           <input type="text" id="post-title" required>
         </div>
         <div class="form-group">
-          <label>내용</label>
-          <textarea id="post-content" rows="6" required></textarea>
+          <label>내용 <span style="font-weight:normal; font-size:11px; color:var(--muted);">(💡 포스터 삽입: &lt;img src="이미지경로"&gt;)</span></label>
+          <textarea id="post-content" rows="8" required placeholder="내용을 입력하세요.&#10;이미지 삽입 예시: &lt;img src='images/poster.jpg'&gt;"></textarea>
         </div>
         <button type="submit" class="form-submit" id="form-submit-btn">등록하기</button>
       </form>
