@@ -132,13 +132,37 @@
     .sns-btn.facebook { background: #1877f2; color: white; }
     .sns-btn.disabled { background: #e0e0e0; color: #888; cursor: not-allowed; }
 
-    /* 동적 3열 뉴스 카드 & 썸네일 스타일 */
+    /* 동적 3열 뉴스 카드 & 썸네일 스타일 (블러 배경 채우기 스타일 적용) */
     .dynamic-news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
     .news-card { background: white; border-radius: 8px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: transform 0.2s, border-color 0.2s; }
     .news-card:hover { transform: translateY(-3px); border-color: var(--green); }
     
-    .news-thumb { width: 100%; height: 160px; background: var(--cream); overflow: hidden; display: none; border-bottom: 1px solid var(--line); }
-    .news-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .news-thumb { 
+      width: 100%; 
+      height: 220px; 
+      background: #172b28; 
+      position: relative; 
+      overflow: hidden; 
+      display: none; 
+      border-bottom: 1px solid var(--line); 
+    }
+    .news-thumb::before { 
+      content: ""; 
+      position: absolute; 
+      inset: -20px; 
+      background-image: var(--bg-url); 
+      background-size: cover; 
+      background-position: center; 
+      filter: blur(14px) brightness(0.55); 
+      opacity: 0.75; 
+    }
+    .news-thumb img { 
+      position: relative; 
+      z-index: 1; 
+      width: 100%; 
+      height: 100%; 
+      object-fit: contain; 
+    }
 
     .news-content-wrap { padding: 26px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
     .news-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
@@ -300,7 +324,7 @@
       </div>
     </section>
 
-    <!-- 동적 3열 공지 및 소식 섹션 (공지사항 3개 자동 순환 기능 적용) -->
+    <!-- 동적 3열 공지 및 소식 섹션 -->
     <section class="section soft" id="news">
       <div class="wrap">
         <div class="section-head">
@@ -521,7 +545,7 @@
     });
   </script>
 
-  <!-- Firebase v9 Web SDK 연동 (공지사항 최신 3개 자동 순환 로직 포함) -->
+  <!-- Firebase v9 Web SDK 연동 -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -569,6 +593,7 @@
 
             if (current.imgUrl) {
               imgEl.src = current.imgUrl;
+              thumbEl.style.setProperty('--bg-url', `url(${current.imgUrl})`);
               thumbEl.style.display = 'block';
             } else {
               thumbEl.style.display = 'none';
@@ -580,7 +605,7 @@
           updateNoticeCard();
 
           if (notices.length > 1) {
-            setInterval(updateNoticeCard, 4000); // 4초 간격 변경
+            setInterval(updateNoticeCard, 4000);
           }
         } else {
           document.getElementById('latest-notice-title').textContent = '등록된 공지사항이 없습니다.';
@@ -600,8 +625,10 @@
           document.getElementById('latest-statement-preview').textContent = stripHtml(data.content);
 
           if (data.imgUrl) {
+            const thumbEl = document.getElementById('latest-statement-thumb');
             document.getElementById('latest-statement-img').src = data.imgUrl;
-            document.getElementById('latest-statement-thumb').style.display = 'block';
+            thumbEl.style.setProperty('--bg-url', `url(${data.imgUrl})`);
+            thumbEl.style.display = 'block';
           }
         } else {
           document.getElementById('latest-statement-title').textContent = '등록된 성명서가 없습니다.';
@@ -621,8 +648,10 @@
           document.getElementById('latest-gallery-preview').textContent = stripHtml(data.content || data.desc);
 
           if (data.imgUrl) {
+            const thumbEl = document.getElementById('latest-gallery-thumb');
             document.getElementById('latest-gallery-img').src = data.imgUrl;
-            document.getElementById('latest-gallery-thumb').style.display = 'block';
+            thumbEl.style.setProperty('--bg-url', `url(${data.imgUrl})`);
+            thumbEl.style.display = 'block';
           }
         } else {
           document.getElementById('latest-gallery-title').textContent = '등록된 활동 소식이 없습니다.';
