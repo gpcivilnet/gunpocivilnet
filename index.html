@@ -42,31 +42,13 @@
     .nav-group:hover .navitem::after, .navitem:hover::after, .navitem:focus-visible::after { width:100%; }
     
     .dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #ffffff;
-      min-width: 190px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      padding: 8px 0;
-      z-index: 100;
+      display: none; position: absolute; top: 100%; left: 0; background: #ffffff;
+      min-width: 190px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--line);
+      border-radius: 4px; padding: 8px 0; z-index: 100;
     }
     .nav-group:hover .dropdown { display: block; }
-    .dropdown a {
-      display: block;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink);
-      transition: background 0.2s, color 0.2s;
-    }
-    .dropdown a:hover {
-      background: var(--cream);
-      color: var(--green);
-    }
+    .dropdown a { display: block; padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--ink); transition: background 0.2s, color 0.2s; }
+    .dropdown a:hover { background: var(--cream); color: var(--green); }
 
     .nav-cta { padding:11px 17px; border-radius:4px; background:var(--green); color:white; font-size:13px; font-weight:700; white-space:nowrap; }
     .menu-toggle { display:none; border:1px solid var(--line); background:white; padding:8px 11px; border-radius:5px; cursor: pointer; }
@@ -150,16 +132,30 @@
     .sns-btn.facebook { background: #1877f2; color: white; }
     .sns-btn.disabled { background: #e0e0e0; color: #888; cursor: not-allowed; }
 
-    .news-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:16px; }
-    .news-feature { padding:30px; background:var(--cream); border:1px solid var(--line); }
-    .news-feature .tag { color:var(--green); font-size:11px; font-weight:800; letter-spacing:.12em; }
-    .news-feature h3 { margin:16px 0 12px; font-size:24px; line-height:1.4; letter-spacing:-.04em; }
-    .news-feature p { color:var(--muted); font-size:14px; }
-    .news-side { display:grid; gap:12px; }
-    .news-item { display:flex; justify-content:space-between; gap:16px; align-items:center; padding:19px 20px; border:1px solid var(--line); background: white; transition: border-color .2s; }
-    .news-item:hover { border-color: var(--green); }
-    .news-item strong { font-size:14px; }
-    .news-item span { color:var(--muted); font-size:11px; white-space:nowrap; }
+    /* 동적 3열 뉴스 카드 & 썸네일 스타일 */
+    .dynamic-news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+    .news-card { background: white; border-radius: 8px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: transform 0.2s, border-color 0.2s; }
+    .news-card:hover { transform: translateY(-3px); border-color: var(--green); }
+    
+    /* 썸네일 영역 추가 */
+    .news-thumb { width: 100%; height: 160px; background: var(--cream); overflow: hidden; display: none; border-bottom: 1px solid var(--line); }
+    .news-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .news-content-wrap { padding: 26px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+    .news-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .news-badge { padding: 3px 9px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+    .news-badge.notice { background: var(--accent); color: white; }
+    .news-badge.cat { background: #eef3e8; color: var(--green); }
+    .news-date { font-size: 12px; color: var(--muted); }
+    .news-card h3 { font-size: 17px; margin: 0 0 10px; font-weight: 700; line-height: 1.4; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .news-card p { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0 0 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .news-more { font-size: 13px; font-weight: 700; color: var(--green); display: inline-flex; align-items: center; gap: 4px; }
+    .news-more:hover { text-decoration: underline; }
+
+    .webzine-banner { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 20px 26px; background: white; border: 1px solid var(--line); border-radius: 8px; transition: border-color .2s; }
+    .webzine-banner:hover { border-color: var(--green); }
+    .webzine-banner strong { font-size: 15px; color: var(--green-dark); }
+    .webzine-banner span { font-size: 13px; font-weight: 700; color: var(--green); white-space: nowrap; }
 
     footer { background:#102e26; color:#dce8df; padding:42px 0 26px; }
     .footer-top { display:flex; justify-content:space-between; gap:30px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.17); }
@@ -179,9 +175,9 @@
       .hero-art { transform:scale(.88); }
       .purpose { gap:35px; }
       .sns-grid { grid-template-columns: 1fr; }
+      .dynamic-news-grid { grid-template-columns: 1fr; }
     }
 
-    /* 모바일 반응형 스타일 수정 */
     @media (max-width: 740px) {
       .wrap { width:min(100% - 32px, var(--max)); }
       .topline .wrap { font-size:10px; }
@@ -199,7 +195,6 @@
       .navitem .arrow { font-size: 10px; transition: transform 0.2s; }
       .nav-group.open .navitem .arrow { transform: rotate(180deg); }
       
-      /* 모바일에서는 hover 동작 제거 및 open 클래스로 열림 제어 */
       .nav-group:hover .dropdown { display: none; }
       .dropdown { position: static; box-shadow: none; border: none; background: #f8f9f4; padding: 4px 0 8px 15px; width: 100%; border-radius: 0; }
       .nav-group.open .dropdown { display: block; }
@@ -213,11 +208,12 @@
       .vision-grid, .activities { grid-template-columns:1fr; }
       .vision-card { min-height:0; }
       .vision-card h3 { margin-top:15px; }
-      .purpose, .social-grid, .news-grid { grid-template-columns:1fr; gap:28px; }
+      .purpose, .social-grid { grid-template-columns:1fr; gap:28px; }
       .purpose-quote { padding-top:0; }
       .footer-top, .footer-bottom { flex-direction:column; }
       .sns-card { flex-direction: column; align-items: flex-start; }
       .sns-btn { width: 100%; justify-content: center; }
+      .webzine-banner { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -281,9 +277,9 @@
       <div class="wrap hero-inner">
         <div>
           <h1 style="font-size: clamp(28px, 4.2vw, 48px); line-height: 1.25; word-break: keep-all;">
-  <span style="white-space: nowrap;">민주주의 30년의 자산을 넘어,</span><br>
-  <em>다음 30년의 미래로</em>
-</h1>
+            <span style="white-space: nowrap;">민주주의 30년의 자산을 넘어,</span><br>
+            <em>다음 30년의 미래로</em>
+          </h1>
           <p class="hero-copy">군포의 시민사회가 쌓아 온 경험과 지혜를 다음 세대의 시민자산으로 이어갑니다. 활동가의 지속가능한 삶, 새로운 시민 주체의 성장, 사람과 자연이 공존하는 지역공동체를 함께 만들어갑니다.</p>
           <div class="hero-actions">
             <a class="btn primary" href="#about">협의회 알아보기 <span>↗</span></a>
@@ -305,6 +301,82 @@
       </div>
     </section>
 
+    <!-- 동적 3열 공지 및 소식 섹션 (이미지 썸네일 지원) -->
+    <section class="section soft" id="news">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="section-kicker">NEWS &amp; NOTICE</div><h2>공지 및 소식</h2></div>
+          <p class="section-intro">협의회의 최신 공지와 정책 제안, 활동 소식을 실시간으로 전합니다.</p>
+        </div>
+
+        <div class="dynamic-news-grid">
+          <!-- 1열: 최신 공지사항 -->
+          <article class="news-card">
+            <div id="latest-notice-thumb" class="news-thumb">
+              <img id="latest-notice-img" src="" alt="공지사항 이미지">
+            </div>
+            <div class="news-content-wrap">
+              <div>
+                <div class="news-card-head">
+                  <span class="news-badge notice">협의회 공지</span>
+                  <span id="latest-notice-date" class="news-date">-</span>
+                </div>
+                <h3 id="latest-notice-title">불러오는 중...</h3>
+                <p id="latest-notice-preview">최신 공지사항을 불러오고 있습니다.</p>
+              </div>
+              <a class="news-more" href="notice.html">공지사항 전체보기 →</a>
+            </div>
+          </article>
+
+          <!-- 2열: 최신 성명서 · 정책 제안 -->
+          <article class="news-card">
+            <div id="latest-statement-thumb" class="news-thumb">
+              <img id="latest-statement-img" src="" alt="성명서 이미지">
+            </div>
+            <div class="news-content-wrap">
+              <div>
+                <div class="news-card-head">
+                  <span class="news-badge cat">성명서 · 정책 제안</span>
+                  <span id="latest-statement-date" class="news-date">-</span>
+                </div>
+                <h3 id="latest-statement-title">불러오는 중...</h3>
+                <p id="latest-statement-preview">최신 성명서 및 정책 제안을 불러오고 있습니다.</p>
+              </div>
+              <a class="news-more" href="statement.html">성명서 전체보기 →</a>
+            </div>
+          </article>
+
+          <!-- 3열: 최신 언론 보도 및 활동 갤러리 -->
+          <article class="news-card">
+            <div id="latest-gallery-thumb" class="news-thumb">
+              <img id="latest-gallery-img" src="" alt="갤러리 이미지">
+            </div>
+            <div class="news-content-wrap">
+              <div>
+                <div class="news-card-head">
+                  <span class="news-badge cat">활동 갤러리 · 보도</span>
+                  <span id="latest-gallery-date" class="news-date">-</span>
+                </div>
+                <h3 id="latest-gallery-title">불러오는 중...</h3>
+                <p id="latest-gallery-preview">최신 활동 소식을 불러오고 있습니다.</p>
+              </div>
+              <a class="news-more" href="gallery.html">갤러리 전체보기 →</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- 하단 웹진 바로가기 배너 -->
+        <a class="webzine-banner" href="webzine.html">
+          <div>
+            <strong>군포시민사회단체협의회 웹진 아카이브</strong>
+            <span style="display:block; font-weight:normal; color:var(--muted); font-size:13px; margin-top:2px;">지역의 기록과 시민사회의 이야기를 담은 웹진을 만나보세요.</span>
+          </div>
+          <span>웹진 바로가기 ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- "시민사회의 경험을 잇고..." 소개 섹션 -->
     <section class="section" id="about">
       <div class="wrap">
         <div class="section-head">
@@ -390,29 +462,6 @@
         </div>
       </div>
     </section>
-
-    <section class="section soft" id="news">
-      <div class="wrap">
-        <div class="section-head">
-          <div><div class="section-kicker">NEWS &amp; NOTICE</div><h2>공지 및 소식</h2></div>
-          <p class="section-intro">협의회의 공지와 활동, 정책 제안 및 지역 시민사회의 소식을 전합니다.</p>
-        </div>
-        <div class="news-grid">
-          <article class="news-feature">
-            <div class="tag">FOUNDING STATEMENT · 2026.10</div>
-            <h3>민주주의 30년의 자산을 넘어,<br>지속가능한 지역공동체와 생태민주주의의 미래로</h3>
-            <p>사람을 세우고, 공동체를 넓히며, 자연과 공존하는 군포의 새로운 30년을 향해 지역 시민사회의 연대와 참여를 요청합니다.</p>
-            <a class="btn secondary" href="#about">설립 취지 살펴보기 ↗</a>
-          </article>
-          <div class="news-side">
-            <a class="news-item" href="notice.html"><strong>협의회 공지사항</strong><span>바로가기 ↗</span></a>
-            <a class="news-item" href="statement.html"><strong>성명서 · 정책 제안</strong><span>바로가기 ↗</span></a>
-            <a class="news-item" href="gallery.html"><strong>언론 보도 및 활동 갤러리</strong><span>바로가기 ↗</span></a>
-            <a class="news-item" href="webzine.html"><strong>웹진</strong><span>바로가기 ↗</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -440,7 +489,6 @@
   </footer>
 
   <script>
-    // 모바일 전체 메뉴 토글
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('#main-nav');
     
@@ -449,21 +497,16 @@
       toggle.setAttribute('aria-expanded', String(opened));
     });
 
-    // 모바일 아코디언 서브메뉴 토글 로직
     const navGroups = document.querySelectorAll('.nav-group');
-    
     navGroups.forEach(group => {
       const item = group.querySelector('.navitem');
       const dropdown = group.querySelector('.dropdown');
-      
       if (dropdown && item) {
         item.addEventListener('click', (e) => {
           if (window.innerWidth <= 740) {
             e.preventDefault();
             navGroups.forEach(otherGroup => {
-              if (otherGroup !== group) {
-                otherGroup.classList.remove('open');
-              }
+              if (otherGroup !== group) otherGroup.classList.remove('open');
             });
             group.classList.toggle('open');
           }
@@ -471,13 +514,104 @@
       }
     });
 
-    // 링크 클릭 시 메뉴 닫기
     nav.querySelectorAll('.dropdown a, a.navitem').forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
+  </script>
+
+  <!-- Firebase v9 Web SDK 연동 (이미지 썸네일 자동 바인딩 포함) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC46ebJn5gQPBBz_NCjVqtGvWv9CKA7Dac",
+      authDomain: "gunpocivilnet-db4c0.firebaseapp.com",
+      projectId: "gunpocivilnet-db4c0",
+      storageBucket: "gunpocivilnet-db4c0.firebasestorage.app",
+      messagingSenderId: "182564753780",
+      appId: "1:182564753780:web:e6c6616ef99296fe4edc21"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function stripHtml(html) {
+      const temp = document.createElement('div');
+      temp.innerHTML = html || '';
+      return temp.textContent || temp.innerText || '';
+    }
+
+    async function loadHomeLatestPosts() {
+      // 1. 공지사항 (notices)
+      try {
+        const noticeSnap = await getDocs(query(collection(db, "notices"), orderBy("createdAt", "desc"), limit(1)));
+        if (!noticeSnap.empty) {
+          const data = noticeSnap.docs[0].data();
+          document.getElementById('latest-notice-title').textContent = data.title;
+          document.getElementById('latest-notice-date').textContent = data.date || '';
+          document.getElementById('latest-notice-preview').textContent = stripHtml(data.content);
+          
+          // 이미지가 있는 경우에만 썸네일 노출
+          if (data.imgUrl) {
+            document.getElementById('latest-notice-img').src = data.imgUrl;
+            document.getElementById('latest-notice-thumb').style.display = 'block';
+          }
+        } else {
+          document.getElementById('latest-notice-title').textContent = '등록된 공지사항이 없습니다.';
+          document.getElementById('latest-notice-preview').textContent = '';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      // 2. 성명서 (statements)
+      try {
+        const stmtSnap = await getDocs(query(collection(db, "statements"), orderBy("createdAt", "desc"), limit(1)));
+        if (!stmtSnap.empty) {
+          const data = stmtSnap.docs[0].data();
+          document.getElementById('latest-statement-title').textContent = data.title;
+          document.getElementById('latest-statement-date').textContent = data.date || '';
+          document.getElementById('latest-statement-preview').textContent = stripHtml(data.content);
+
+          if (data.imgUrl) {
+            document.getElementById('latest-statement-img').src = data.imgUrl;
+            document.getElementById('latest-statement-thumb').style.display = 'block';
+          }
+        } else {
+          document.getElementById('latest-statement-title').textContent = '등록된 성명서가 없습니다.';
+          document.getElementById('latest-statement-preview').textContent = '';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      // 3. 갤러리 (gallery)
+      try {
+        const gallerySnap = await getDocs(query(collection(db, "gallery"), orderBy("createdAt", "desc"), limit(1)));
+        if (!gallerySnap.empty) {
+          const data = gallerySnap.docs[0].data();
+          document.getElementById('latest-gallery-title').textContent = data.title;
+          document.getElementById('latest-gallery-date').textContent = data.date || '';
+          document.getElementById('latest-gallery-preview').textContent = stripHtml(data.content || data.desc);
+
+          if (data.imgUrl) {
+            document.getElementById('latest-gallery-img').src = data.imgUrl;
+            document.getElementById('latest-gallery-thumb').style.display = 'block';
+          }
+        } else {
+          document.getElementById('latest-gallery-title').textContent = '등록된 활동 소식이 없습니다.';
+          document.getElementById('latest-gallery-preview').textContent = '';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    loadHomeLatestPosts();
   </script>
 </body>
 </html>

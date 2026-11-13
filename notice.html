@@ -86,7 +86,6 @@
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
     .modal-content { background: white; padding: 30px; border-radius: 8px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
     
-    /* 모달 내 본문 이미지 반응형 스타일 */
     .modal-content img { max-width: 100% !important; height: auto !important; border-radius: 6px; margin: 15px auto; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: block; }
     .modal-content iframe { max-width: 100% !important; height: auto !important; }
 
@@ -237,11 +236,18 @@
         document.getElementById('detail-date').textContent = post.date || '-';
         document.getElementById('detail-views').textContent = (post.views || 0) + 1;
         
-        // 본문 HTML 렌더링 (이미지 태그 허용) 및 일반 URL 하이퍼링크 변환
+        // 상세 모달 상단 대표 이미지 처리
+        const imgEl = document.getElementById('detail-img');
+        if (post.imgUrl) {
+          imgEl.src = post.imgUrl;
+          imgEl.style.display = 'block';
+        } else {
+          imgEl.style.display = 'none';
+        }
+
         const contentEl = document.getElementById('detail-content');
         if (post.content) {
           let formattedContent = post.content;
-          // HTML 태그 속성(src="http...") 내부의 URL은 제외하고 순수 텍스트 URL만 링크로 변환
           const urlRegex = /(?<!=["'])(https?:\/\/[^\s<"']+)/g;
           formattedContent = formattedContent.replace(urlRegex, '<a href="$1" target="_blank" style="color:var(--green); text-decoration:underline; word-break:break-all;" rel="noopener noreferrer">$1 ↗</a>');
           contentEl.innerHTML = formattedContent;
@@ -274,28 +280,62 @@
       const cat = document.getElementById('post-cat').value;
       const title = document.getElementById('post-title').value.trim();
       const content = document.getElementById('post-content').value.trim();
+      const fileInput = document.getElementById('post-img-file');
 
-      const today = new Date();
-      const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+      const submitBtn = document.getElementById('form-submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '처리 중...';
 
-      if (editId) {
-        await updateDoc(doc(db, "notices", editId), { cat, title, content });
-        alert('수정되었습니다.');
+      const saveToFirestore = async (imgUrl) => {
+        try {
+          const today = new Date();
+          const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+          if (editId) {
+            await updateDoc(doc(db, "notices", editId), { cat, title, content, imgUrl });
+            alert('수정되었습니다.');
+          } else {
+            await addDoc(collection(db, "notices"), {
+              cat,
+              title,
+              content,
+              imgUrl,
+              date: dateStr,
+              views: 0,
+              isNotice: cat === '창립/총회',
+              createdAt: new Date()
+            });
+            alert('등록되었습니다.');
+          }
+
+          window.closeModal('write-modal');
+          renderBoard();
+        } catch (err) {
+          console.error(err);
+          alert('저장 중 오류가 발생했습니다.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = editId ? '수정 완료' : '등록하기';
+        }
+      };
+
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        if (file.size > 800 * 1024) {
+          alert('파일 크기가 너무 큽니다. 800KB 이하의 이미지 파일을 선택해 주세요.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = editId ? '수정 완료' : '등록하기';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = async function(uploadEvent) {
+          await saveToFirestore(uploadEvent.target.result);
+        };
+        reader.readAsDataURL(file);
       } else {
-        await addDoc(collection(db, "notices"), {
-          cat,
-          title,
-          content,
-          date: dateStr,
-          views: 0,
-          isNotice: cat === '창립/총회',
-          createdAt: new Date()
-        });
-        alert('등록되었습니다.');
+        const existingUrl = document.getElementById('post-existing-img').value;
+        await saveToFirestore(existingUrl);
       }
-
-      window.closeModal('write-modal');
-      renderBoard();
     };
 
     window.deleteCurrentPost = async () => {
@@ -310,6 +350,7 @@
 
     window.openWriteModal = () => {
       document.getElementById('edit-id').value = '';
+      document.getElementById('post-existing-img').value = '';
       document.getElementById('write-modal-title').textContent = '공지사항 글쓰기';
       document.getElementById('form-submit-btn').textContent = '등록하기';
       document.getElementById('write-form').reset();
@@ -317,9 +358,10 @@
     };
 
     window.openEditModal = async () => {
-      const docSnap = await getDoc(doc(db, "notices", currentPostId));
-      if (!docSnap.exists()) return;
-      const post = docSnap.data();
+      const docSnap = await doc(db, "notices", currentPostId);
+      const snap = await getDoc(docSnap);
+      if (!snap.exists()) return;
+      const post = snap.data();
 
       window.closeModal('detail-modal');
       document.getElementById('edit-id').value = currentPostId;
@@ -329,6 +371,7 @@
       document.getElementById('post-cat').value = post.cat || '일반공지';
       document.getElementById('post-title').value = post.title;
       document.getElementById('post-content').value = post.content;
+      document.getElementById('post-existing-img').value = post.imgUrl || '';
 
       document.getElementById('write-modal').style.display = 'flex';
     };
@@ -444,7 +487,7 @@
     </div>
   </main>
 
- <!-- 상세 모달 -->
+  <!-- 상세 모달 -->
   <div id="detail-modal" class="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('detail-modal')">×</button>
@@ -453,7 +496,9 @@
         <h2 id="detail-title" style="margin:5px 0;">제목</h2>
         <div style="font-size:12px; color:var(--muted);">작성일: <span id="detail-date"></span> · 조회수: <span id="detail-views"></span></div>
       </div>
-      <!-- 고정된 <img> 태그가 있다면 이 위에서 삭제해야 각 게시글의 본문(detail-content)만 출력됩니다 -->
+      <div style="margin-bottom:15px; text-align:center;">
+        <img id="detail-img" src="" alt="첨부 이미지" style="max-width:100%; max-height:350px; border-radius:6px; display:none; margin:0 auto;">
+      </div>
       <div id="detail-content" style="white-space: pre-wrap; font-size: 14px; min-height: 100px; line-height: 1.7;">내용</div>
       <div class="modal-footer admin-target admin-only">
         <button type="button" class="btn-sm btn-edit" onclick="openEditModal()">수정</button>
@@ -469,6 +514,7 @@
       <div class="modal-header"><h2 id="write-modal-title" style="margin:0;">글쓰기</h2></div>
       <form id="write-form" onsubmit="handleWrite(event)">
         <input type="hidden" id="edit-id">
+        <input type="hidden" id="post-existing-img">
         <div class="form-group">
           <label>구분</label>
           <select id="post-cat">
@@ -482,8 +528,12 @@
           <input type="text" id="post-title" required>
         </div>
         <div class="form-group">
-          <label>내용 <span style="font-weight:normal; font-size:11px; color:var(--muted);">(💡 포스터 삽입: &lt;img src="이미지경로"&gt;)</span></label>
-          <textarea id="post-content" rows="8" required placeholder="내용을 입력하세요.&#10;이미지 삽입 예시: &lt;img src='images/poster.jpg'&gt;"></textarea>
+          <label>대표 이미지 첨부 (800KB 이하)</label>
+          <input type="file" id="post-img-file" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>내용</label>
+          <textarea id="post-content" rows="8" required placeholder="내용을 입력하세요."></textarea>
         </div>
         <button type="submit" class="form-submit" id="form-submit-btn">등록하기</button>
       </form>
